@@ -1,0 +1,10 @@
+*.exe
+*.dsym
+main
+.vscode
+bin/
+lib/
+makefile
+makefile
+.dll
+.gitattributes
