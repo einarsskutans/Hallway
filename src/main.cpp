@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "include/app.h"
+#include "app.h"
 
 int main () {
     App* app = new App();
