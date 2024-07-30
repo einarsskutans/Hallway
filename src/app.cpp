@@ -1,5 +1,5 @@
 #include <raylib.h>
-#include "app.h"
+#include "include/app.h"
 
 void App::Init(std::pair<int, int> newScreensize, int fps, bool debug) {
     screensize = newScreensize;
