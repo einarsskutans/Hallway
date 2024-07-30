@@ -1,6 +1,10 @@
 #include "include/sprite.h"
 
 void Sprite::Move(std::pair<int, int> newpos) {
+    pos.first = pos.first + newpos.first;
+    pos.second = pos.second + newpos.second;
+}
+void Sprite::SetPos(std::pair<int, int> newpos) {
     pos = newpos;
 }
 void Sprite::SetSize(std::pair<int, int> newsize) {
@@ -31,3 +35,5 @@ bool Sprite::GetDrawable() {
 bool Sprite::GetMovable() {
     return movable;
 }
+
+void Draw() {};

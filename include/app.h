@@ -2,6 +2,7 @@
 #define APP_H
 
 #include <utility>
+#include "player.h"
 
 class App {
     public:

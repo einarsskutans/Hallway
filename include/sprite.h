@@ -6,6 +6,7 @@
 class Sprite {
     public:
         void Move(std::pair<int, int> newpos);
+        void SetPos(std::pair<int, int> newpos);
         void SetSize(std::pair<int, int> newsize);
         void SetVel(std::pair<int, int> newvel);
         void SetDrawable(bool newdrawable);
