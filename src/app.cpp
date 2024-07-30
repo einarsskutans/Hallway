@@ -6,7 +6,7 @@ void App::Init(std::pair<int, int> newScreensize, int fps, bool debug) {
     InitWindow(screensize.first, screensize.second, "test");
     SetTargetFPS(fps);
 }
-void App::Run() {
+void App::Run() { // Main loop
     while (WindowShouldClose() == false){
         BeginDrawing();
         ClearBackground(WHITE);
