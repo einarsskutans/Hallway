@@ -1,6 +1,5 @@
 #include "include/player.h"
 
-Player::Player() {}
 Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, std::pair<int, int> newvel) {
     SetPos(newpos);
     SetSize(newsize);
@@ -8,5 +7,5 @@ Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, std::pai
 }
 
 void Player::Draw() {
-    DrawRectangle(GetPos().first, GetPos().second, GetSize().first, GetSize().second, BLACK);
+    DrawRectangle(GetPos().first-GetSize().first/2, GetPos().second-GetSize().second/2, GetSize().first, GetSize().second, BLACK);
 }

@@ -7,14 +7,22 @@ void App::Init(std::pair<int, int> newScreensize, int fps, bool debug) {
     SetTargetFPS(fps);
 }
 void App::Run() { // Main loop
-    Player* player1 = new Player({50, 50}, {25, 25}, {0, 0});
+    Player* player1 = new Player({50, 50}, {64, 64}, {16, 16});
 
     while (WindowShouldClose() == false){
-        BeginDrawing();
-        ClearBackground(WHITE);
+        // Events
+        if (IsKeyDown(KEY_RIGHT)) player1 -> Move({player1->GetVel().first, 0});
+        if (IsKeyDown(KEY_LEFT)) player1 -> Move({-player1->GetVel().first, 0});
+        if (IsKeyDown(KEY_UP)) player1 -> Move({0, -player1->GetVel().second});
+        if (IsKeyDown(KEY_DOWN)) player1 -> Move({0, player1->GetVel().second});
 
+        // Draw
+        BeginDrawing();
+
+        ClearBackground(GRAY);
         player1->Draw();
 
         EndDrawing();
     }
+    CloseWindow();
 }

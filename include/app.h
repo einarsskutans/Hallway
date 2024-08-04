@@ -4,6 +4,8 @@
 #include <utility>
 #include "player.h"
 
+const std::pair<int, int> SCREENSIZE = {540, 540};
+
 class App {
     public:
         void Init(std::pair<int, int> newScreensize, int fps, bool debug);
