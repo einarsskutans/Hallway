@@ -2,7 +2,9 @@
 #define APP_H
 
 #include <utility>
+#include <raylib.h>
 #include "player.h"
+#include "physics.h"
 
 const std::pair<int, int> SCREENSIZE = {540, 540};
 
