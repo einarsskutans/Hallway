@@ -20,7 +20,10 @@ void App::Run() { // Main loop
         BeginDrawing();
         ClearBackground(GRAY);
 
-        
+        DrawLine(32, 0, 32, SCREENSIZE.second, GREEN);
+        DrawLine(SCREENSIZE.first-32, 0, SCREENSIZE.first-32, SCREENSIZE.second, GREEN);
+        DrawLine(0, 32, SCREENSIZE.first, 32, GREEN);
+        DrawLine(0, SCREENSIZE.second-32, SCREENSIZE.first, SCREENSIZE.second-32, GREEN);
         player1->Draw();
 
         EndDrawing();
