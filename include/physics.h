@@ -7,7 +7,7 @@
 
 class Physics {
     public:
-        static void CollideBounds(Sprite* entity, std::pair<int, int> boundspos); // Creates symmetrical "lines" to define game bounds
+        static void CollideBounds(Sprite* entity, std::pair<int, int> boundspos, bool drawlines); // Creates symmetrical "lines" to define game bounds
 };
 
 #endif
