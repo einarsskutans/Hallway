@@ -1,10 +1,14 @@
 #include "include/physics.h"
 
 void Physics::CollideBounds(Sprite* entity, std::pair<int, int> boundspos, bool drawlines) {
-    if (entity->GetPos().first-entity->GetSize().first <= boundspos.first+entity->GetSize().first/2) entity->SetPos(entity->GetPos());
-    if (entity->GetPos().first+entity->GetSize().first/2 > SCREENSIZE.first-boundspos.first) entity->Move({-entity->GetSize().first, 0});
-    if (entity->GetPos().second-entity->GetSize().second/2 < boundspos.second) entity->Move({0, entity->GetSize().second});
-    if (entity->GetPos().second+entity->GetSize().second/2 > SCREENSIZE.second-boundspos.second) entity->Move({0, -entity->GetSize().second});
+    if (entity->pos.first - entity->size.first/2 < boundspos.first) entity->vel.left.second = false;
+    else entity->vel.left.second = true;
+    if (entity->pos.first + entity->size.first/2 > SCREENSIZE.first - boundspos.first) entity->vel.right.second = false;
+    else entity->vel.right.second = true;
+    if (entity->pos.second - entity->size.second/2 < boundspos.second) entity->vel.top.second = false;
+    else entity->vel.top.second = true;
+    if (entity->pos.second + entity->size.second/2 > SCREENSIZE.second - boundspos.second) entity->vel.bottom.second = false;
+    else entity->vel.bottom.second = true;
     if (drawlines) {
         DrawLine(boundspos.first, 0, boundspos.first, SCREENSIZE.second, WHITE);
         DrawLine(SCREENSIZE.first-boundspos.first, 0, SCREENSIZE.first-boundspos.first, SCREENSIZE.second, WHITE);
