@@ -1,6 +1,6 @@
 #include "include/player.h"
 
-Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, std::pair<int, int> newvel) {
+Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, Velocity newvel) {
     SetPos(newpos);
     SetSize(newsize);
     SetVel(newvel);

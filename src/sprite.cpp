@@ -10,7 +10,7 @@ void Sprite::SetPos(std::pair<int, int> newpos) {
 void Sprite::SetSize(std::pair<int, int> newsize) {
     size = newsize;
 }
-void Sprite::SetVel(std::pair<int, int> newvel) {
+void Sprite::SetVel(Velocity newvel) {
     vel = newvel;
 }
 void Sprite::SetDrawable(bool newdrawable) {
@@ -26,7 +26,7 @@ std::pair<int, int> Sprite::GetPos() {
 std::pair<int, int> Sprite::GetSize() {
     return size;
 }
-std::pair<int, int> Sprite::GetVel() {
+Velocity Sprite::GetVel() {
     return vel;
 }
 bool Sprite::GetDrawable() {
