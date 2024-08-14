@@ -3,6 +3,7 @@
 
 #include <utility>
 #include "velocity.h"
+#include <raylib.h>
 
 class Sprite {
     public:
@@ -20,6 +21,7 @@ class Sprite {
         Velocity vel;
         std::pair<int, int> pos;
         std::pair<int, int> size;
+        void Draw();
     private:
         bool drawable;
         bool movable;

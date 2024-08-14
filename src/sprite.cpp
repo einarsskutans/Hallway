@@ -35,5 +35,6 @@ bool Sprite::GetDrawable() {
 bool Sprite::GetMovable() {
     return movable;
 }
-
-void Draw() {};
+void Sprite::Draw() {
+    DrawRectangle(GetPos().first-GetSize().first/2, GetPos().second-GetSize().second/2, GetSize().first, GetSize().second, BLACK);
+}
