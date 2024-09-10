@@ -3,8 +3,12 @@
 main
 .vscode
 bin/
-lib/
+
 makefile
 makefile
 .dll
 .gitattributes
+
+libraylib.a
+raylib.h
+raymath.h
