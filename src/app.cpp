@@ -10,42 +10,34 @@ void App::Init(std::pair<int, int> newScreensize, int fps, bool debug) {
     SetTargetFPS(fps);
 }
 void App::Run() { // Main loop
-    int vel = 16;
+    int vel = 4;
     Velocity defaultvel = {{-vel, true}, {-vel, true}, {vel, true}, {vel, true}};
-    Player* player1 = new Player(SCREENSIZE/2, {64, 64}, defaultvel);
-    Sprite* testcube = new Sprite();
-    testcube->SetSize({20, 20});
-    testcube->pos = {100, 100};
-    Sprite* testcube2 = new Sprite();
-    testcube2->SetSize({20, 20});
-    testcube2->pos = {200, 100};
-    Sprite* testcube3 = new Sprite();
-    testcube3->SetSize({20, 20});
-    testcube3->pos = {100, 264};
+    Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
+    std::pair<int, int> bounds = {64, 64};
+    srand(time(0));
 
-    activeSprites.push_back(testcube);
-    activeSprites.push_back(testcube2);
-    activeSprites.push_back(testcube3);
     while (WindowShouldClose() == false){
         // Events
-        Physics::CollideBounds(player1, {64, 64}, true);
+        Physics::CollideBounds(player1, bounds, true);
         if (IsKeyDown(KEY_RIGHT) && player1->GetVel().right.second) player1 -> Move({player1->GetVel().right.first, 0});
         if (IsKeyDown(KEY_LEFT) && player1->GetVel().left.second) player1 -> Move({player1->GetVel().left.first, 0});
         if (IsKeyDown(KEY_UP) && player1->GetVel().top.second) {
-            for(Sprite* sprite : activeSprites) {
-                sprite->Move({0, -player1->GetVel().top.first});
+            if (player1->GetPos().second > SCREENSIZE.second/2) {
+                player1->Move({0, player1->GetVel().top.first});
+            }
+            if (player1->GetPos().second <= SCREENSIZE.second/2) {
+                
             }
         }
         if (IsKeyDown(KEY_DOWN) && player1->GetVel().bottom.second) player1 -> Move({0, player1->GetVel().bottom.first});
+
+        // Chunk generation
 
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
 
         player1->Draw();
-        for (Sprite* sprite : activeSprites) {
-            sprite->Draw();
-        }
 
         EndDrawing();
     }

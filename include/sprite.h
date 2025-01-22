@@ -2,11 +2,11 @@
 #define SPRITE_H
 
 #include <utility>
-#include "velocity.h"
 #include <raylib.h>
+#include "velocity.h"
 
 class Sprite {
-    public:
+    public:    
         void Move(std::pair<int, int> newpos);
         void SetPos(std::pair<int, int> newpos);
         void SetSize(std::pair<int, int> newsize);
@@ -18,11 +18,12 @@ class Sprite {
         Velocity GetVel();
         bool GetDrawable();
         bool GetMovable();
+        virtual void Draw();
+        friend class Physics;
+    private:
         Velocity vel;
         std::pair<int, int> pos;
         std::pair<int, int> size;
-        void Draw();
-    private:
         bool drawable;
         bool movable;
 };

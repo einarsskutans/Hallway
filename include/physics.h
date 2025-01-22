@@ -2,8 +2,8 @@
 #define PHYSICS_H
 
 #include <utility>
-#include "app.h"
 #include "sprite.h"
+#include "app.h"
 
 class Physics {
     public:
