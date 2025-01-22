@@ -1,4 +1,4 @@
-#include "include/app.h"
+#include "app.h"
 
 std::pair<int, int> operator/(const std::pair<int, int>&a, const int&b) {
     return std::make_pair(a.first/b, a.second/b);

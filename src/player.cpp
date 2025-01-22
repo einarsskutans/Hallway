@@ -1,4 +1,4 @@
-#include "include/player.h"
+#include "player.h"
 
 Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, Velocity newvel) {
     SetPos(newpos);

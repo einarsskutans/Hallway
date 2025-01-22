@@ -1,4 +1,4 @@
-#include "include/sprite.h"
+#include "sprite.h"
 
 void Sprite::Move(std::pair<int, int> newpos) {
     pos.first = pos.first + newpos.first;
