@@ -1,15 +1,19 @@
 #include "tilemap.h"
 
 Tilemap::Tilemap() {
-
+    pos.absolute.x = 0;
+    pos.absolute.y = 0;
+    pos.relative.x = 0;
+    pos.relative.y = 0;
 }
 
 void Tilemap::Load(std::vector<std::vector<int>> map) {
     currentMap = map;
 }
 void Tilemap::Render() {
-    std::pair<int, int> posRelative = {0, 0};
     Color color; // Substitute for textures
+    pos.relative.x = 0;
+    pos.relative.y = 0;
     for (std::vector<int> stateY : currentMap) {
         for (int stateX : stateY) {
             switch (stateX)
@@ -24,15 +28,15 @@ void Tilemap::Render() {
                 color  = BLACK;
                 break;
             }
-            DrawRectangle(pos.first + posRelative.first, pos.second + posRelative.second, 64, 64, color);
-            posRelative.first += 64;
+            DrawRectangle(pos.absolute.x + pos.relative.x, pos.absolute.y + pos.relative.y, 32, 32, color);
+            pos.relative.x += 32;
         }
-        posRelative.first = 0;
-        posRelative.second += 64;
+        pos.relative.x = 0;
+        pos.relative.y += 32;
     }
 }
 
-void Tilemap::Move(std::pair<int, int> newpos) {
-    pos.first = pos.first + newpos.first;
-    pos.second = pos.second + newpos.second;
+void Tilemap::Move(Point newpos) {
+    pos.absolute.x = pos.absolute.x + newpos.x;
+    pos.absolute.y = pos.absolute.y + newpos.y;
 }

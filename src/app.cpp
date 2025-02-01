@@ -29,6 +29,8 @@ void App::Run() { // Main loop
         BeginDrawing();
         ClearBackground(GRAY);
 
+        DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
+
         tilemap->Render();
         player1->Draw();
 
