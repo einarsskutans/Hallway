@@ -1,12 +1,12 @@
 #include "app.h"
 
-std::pair<int, int> operator/(const std::pair<int, int>&a, const int&b) {
-    return std::make_pair(a.first/b, a.second/b);
+Point operator/(const Point&a, const int&b) {
+    return Point{a.x/b, a.y/b};
 }
 
-void App::Init(std::pair<int, int> newScreensize, int fps, bool debug) {
+void App::Init(Point newScreensize, int fps, bool debug) {
     screensize = newScreensize;
-    InitWindow(screensize.first, screensize.second, "test");
+    InitWindow(screensize.x, screensize.y, "test");
     SetTargetFPS(fps);
 }
 void App::Run() { // Main loop
@@ -14,7 +14,7 @@ void App::Run() { // Main loop
     Velocity defaultvel = {{-vel, true}, {-vel, true}, {vel, true}, {vel, true}};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
-    std::pair<int, int> bounds = {64, 64};
+    Point bounds = {64, 64};
     srand(time(0));
 
     while (WindowShouldClose() == false){

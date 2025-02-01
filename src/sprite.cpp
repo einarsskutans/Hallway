@@ -1,13 +1,13 @@
 #include "sprite.h"
 
-void Sprite::Move(std::pair<int, int> newpos) {
-    pos.first = pos.first + newpos.first;
-    pos.second = pos.second + newpos.second;
+void Sprite::Move(Point newpos) {
+    pos.relative.x = pos.relative.x + newpos.x;
+    pos.relative.y = pos.relative.y + newpos.y;
 }
-void Sprite::SetPos(std::pair<int, int> newpos) {
-    pos = newpos;
+void Sprite::SetPos(Point newpos) {
+    pos.absolute = newpos;
 }
-void Sprite::SetSize(std::pair<int, int> newsize) {
+void Sprite::SetSize(Point newsize) {
     size = newsize;
 }
 void Sprite::SetVel(Velocity newvel) {
@@ -20,10 +20,10 @@ void Sprite::SetMovable(bool newmovable) {
     movable = newmovable;
 }
 
-std::pair<int, int> Sprite::GetPos() {
+Pos Sprite::GetPos() {
     return pos;
 }
-std::pair<int, int> Sprite::GetSize() {
+Point Sprite::GetSize() {
     return size;
 }
 Velocity Sprite::GetVel() {

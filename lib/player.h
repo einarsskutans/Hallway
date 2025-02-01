@@ -12,7 +12,7 @@
 
 class Player : public Sprite {
     public:
-        Player(std::pair<int, int> newpos, std::pair<int, int> newsize, Velocity newvel);
+        Player(Point newpos, Point newsize, Velocity newvel);
         void Draw();
     private:
         std::string name;

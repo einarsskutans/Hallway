@@ -19,14 +19,14 @@ class Pos {
 
 class Sprite {
     public:    
-        void Move(std::pair<int, int> newpos);
-        void SetPos(std::pair<int, int> newpos);
-        void SetSize(std::pair<int, int> newsize);
+        void Move(Point newpos);
+        void SetPos(Point newpos);
+        void SetSize(Point newsize);
         void SetVel(Velocity newvel);
         void SetDrawable(bool newdrawable);
         void SetMovable(bool newmovable);
-        std::pair<int, int> GetPos();
-        std::pair<int, int> GetSize();
+        Pos GetPos();
+        Point GetSize();
         Velocity GetVel();
         bool GetDrawable();
         bool GetMovable();

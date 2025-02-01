@@ -11,14 +11,14 @@
 #include "sprite.h"
 #include "tilemap.h"
 
-const std::pair<int, int> SCREENSIZE = {540, 540};
+const Point SCREENSIZE = {540, 540};
 
 class App {
     public:
-        void Init(std::pair<int, int> newScreensize, int fps, bool debug);
+        void Init(Point newScreensize, int fps, bool debug);
         void Run();
     private:
-        std::pair<int, int> screensize;
+        Point screensize;
 };
 
 #endif
