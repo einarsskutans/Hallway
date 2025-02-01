@@ -5,6 +5,18 @@
 #include <raylib.h>
 #include "velocity.h"
 
+class Point {
+    public:
+        int x = 0;
+        int y = 0;
+};
+
+class Pos {
+    public:
+        Point absolute;
+        Point relative;
+};
+
 class Sprite {
     public:    
         void Move(std::pair<int, int> newpos);
@@ -22,8 +34,8 @@ class Sprite {
         friend class Physics;
     private:
         Velocity vel;
-        std::pair<int, int> pos;
-        std::pair<int, int> size;
+        Pos pos;
+        Point size;
         bool drawable;
         bool movable;
 };
