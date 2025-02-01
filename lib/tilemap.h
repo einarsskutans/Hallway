@@ -1,0 +1,23 @@
+#ifndef TILEMAP_H
+#define TILEMAP_H
+
+#include <raylib.h>
+#include "sprite.h"
+#include "app.h"
+
+class Tilemap {
+    public:
+        Tilemap();
+        void Load(std::vector<std::vector<int>> map);
+        void Render();
+        void Move(std::pair<int, int> newpos);
+    private:
+        std::pair<int, int> pos = {0, 0};
+        std::vector<std::vector<int>> defaultMap = {{1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1}, {1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0}, {0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0}, {1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1}, {1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0}, {0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0}, {1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1}, {1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0}, {0, 0, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0}};
+        std::vector<std::vector<int>> currentMap = defaultMap;
+};
+
+#endif
+
+// {1, 1, 1, 0, 1, 1}
+// {0, 0, 0, 1, 1, 0}

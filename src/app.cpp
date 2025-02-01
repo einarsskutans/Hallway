@@ -31,8 +31,6 @@ void App::Run() { // Main loop
         }
         if (IsKeyDown(KEY_DOWN) && player1->GetVel().bottom.second) player1 -> Move({0, player1->GetVel().bottom.first});
 
-        // Chunk generation
-
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
