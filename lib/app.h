@@ -9,6 +9,7 @@
 #include "player.h"
 #include "physics.h"
 #include "sprite.h"
+#include "tilemap.h"
 
 const std::pair<int, int> SCREENSIZE = {540, 540};
 
