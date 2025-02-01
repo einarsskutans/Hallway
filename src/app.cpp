@@ -37,7 +37,6 @@ void App::Run() { // Main loop
         BeginDrawing();
         ClearBackground(GRAY);
 
-        //tilemap->Render();
         player1->Draw();
 
         EndDrawing();

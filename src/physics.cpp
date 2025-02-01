@@ -1,5 +1,5 @@
 #include "physics.h"
-/*
+
 void Physics::CollideBounds(Sprite* entity, std::pair<int, int> boundspos, bool drawlines) {
     if (entity->pos.first - entity->size.first/2 < boundspos.first) entity->vel.left.second = false;
     else entity->vel.left.second = true;
@@ -21,4 +21,3 @@ void Physics::CollideBounds(Sprite* entity, std::pair<int, int> boundspos, bool 
         DrawLine(0, SCREENSIZE.second-boundspos.second-entity->GetSize().second/2, SCREENSIZE.first, SCREENSIZE.second-boundspos.second-entity->GetSize().second/2, {179, 179, 179, 179});
     }
 }
-*/

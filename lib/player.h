@@ -1,13 +1,14 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "sprite.h"
 #include <raylib.h>
 #include "sprite.h"
 #include "app.h"
 #include "string"
 #include "velocity.h"
 #include "app.h"
+#include "string"
+#include "velocity.h"
 
 class Player : public Sprite {
     public:
