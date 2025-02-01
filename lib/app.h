@@ -2,8 +2,8 @@
 #define APP_H
 
 #include <utility>
-#include <raylib.h>
 #include <vector>
+#include <raylib.h>
 #include <cstdlib>
 #include <time.h>
 #include "player.h"
