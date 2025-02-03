@@ -7,36 +7,31 @@ Tilemap::Tilemap() {
     pos.relative.y = 0;
 }
 
-void Tilemap::Load(std::vector<std::vector<int>> map) {
-    currentMap = map;
+void Tilemap::Load(int size) {
+    tilesStored = {};
+    Color randcolor = BLACK;
+    for (int j = 0; j < 16; j++) {
+        for (int i = 0; i < size; i++) {
+            if (i > 5) {
+                randcolor = GREEN;
+            }
+            Tile* newtile = new Tile(randcolor);
+            newtile->pos.absolute.x += i*32;
+            newtile->pos.absolute.y += j*32;
+            tilesStored.push_back(newtile);
+        }
+    }
 }
 void Tilemap::Render() {
     Color color; // Substitute for textures
-    pos.relative.x = 0;
-    pos.relative.y = 0;
-    for (std::vector<int> stateY : currentMap) {
-        for (int stateX : stateY) {
-            switch (stateX)
-            {
-            case 0:
-                color = GREEN;
-                break;
-            case 1:
-                color = BLUE;
-                break;
-            default:
-                color  = BLACK;
-                break;
-            }
-            DrawRectangle(pos.absolute.x + pos.relative.x, pos.absolute.y + pos.relative.y, 32, 32, color);
-            pos.relative.x += 32;
-        }
-        pos.relative.x = 0;
-        pos.relative.y += 32;
+    for (Tile* tile : tilesStored) {
+        tile->Draw();
     }
 }
 
 void Tilemap::Move(Point newpos) {
-    pos.absolute.x = pos.absolute.x + newpos.x;
-    pos.absolute.y = pos.absolute.y + newpos.y;
+    for (Tile* tile : tilesStored) {
+        tile->pos.absolute.x += newpos.x;
+        tile->pos.absolute.y += newpos.y;
+    }
 }

@@ -10,6 +10,7 @@
 #include "physics.h"
 #include "sprite.h"
 #include "tilemap.h"
+#include "tile.h"
 
 const Point SCREENSIZE = {540, 540};
 

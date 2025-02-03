@@ -32,10 +32,11 @@ class Sprite {
         bool GetMovable();
         virtual void Draw();
         friend class Physics;
-    private:
+
         Velocity vel;
         Pos pos;
         Point size;
+
         bool drawable;
         bool movable;
 };
