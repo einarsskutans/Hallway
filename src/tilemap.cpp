@@ -1,19 +1,42 @@
 #include "tilemap.h"
 
 Tilemap::Tilemap() {
+    std::srand(std::time({}));
     pos.absolute.x = 0;
     pos.absolute.y = 0;
     pos.relative.x = 0;
     pos.relative.y = 0;
 }
-
 void Tilemap::Load(int size) {
     tilesStored = {};
     Color randcolor = BLACK;
-    for (int j = 0; j < 16; j++) {
-        for (int i = 0; i < size; i++) {
-            if (i > 5) {
+
+    // Randomly generate texturemap (test only)
+    for (int i = 0; i < size; i++) {
+        std::vector<int> column = {};
+        for (int j = 0; j < size; j++) {
+            int randint = std::rand()%10;
+            column.push_back(randint);
+        }
+        textureMap.push_back(column);
+    }
+
+    // Render tilemap -> tiles -> colors
+    for (int j = 0; j < textureMap.size(); j++) {
+        for (int i = 0; i < textureMap[j].size(); i++) {
+            switch (textureMap[j][i]) {
+            case 1:
+                randcolor = BLUE;
+                break;
+            case 2:
                 randcolor = GREEN;
+                break;
+            case 3:
+                randcolor = BLACK;
+                break;
+            default:
+                randcolor = YELLOW;
+                break;
             }
             Tile* newtile = new Tile(randcolor);
             newtile->pos.absolute.x += i*32;

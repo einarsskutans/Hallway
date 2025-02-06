@@ -9,11 +9,13 @@
 class Tilemap {
     public:
         Tilemap();
+        void GenerateMap(int bg, int size);
         void Load(int size);
         void Render();
         void Move(Point newpos);
         Pos pos;
         std::vector<Tile*> tilesStored = {};
+        std::vector<std::vector<int>> textureMap = {};
     private:
 };
 
