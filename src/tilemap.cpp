@@ -7,11 +7,51 @@ Tilemap::Tilemap() {
     pos.relative.x = 0;
     pos.relative.y = 0;
 }
-void Tilemap::Load(int size) {
+
+void Tilemap::readCSV() {
+    std::fstream fin;
+
+    // Open an existing file
+    fin.open("src/map1.csv", std::ios::in);
+
+    // Read the Data from the file
+    // as String Vector
+    std::vector<std::vector<std::string>> newdata;
+    std::vector<std::string> row;
+    std::string line, word, temp;
+
+    while (fin >> temp)
+    {
+        row.clear();
+        getline(fin, line);
+
+        
+        std::stringstream s(line);
+        while (getline(s, word, ','))
+        {
+            row.push_back(word);
+        }
+        newdata.push_back(row);
+    }
+    for (std::vector<std::string> rowp : newdata) {
+        std::vector<int> newvector;
+        for (std::string s : rowp) {
+            newvector.push_back(std::stoi(s));
+        }
+        textureMap.push_back(newvector);
+    }
+    fin.close();
+}
+
+void Tilemap::Load()
+{
     tilesStored = {};
     Color randcolor = BLACK;
 
-    // Randomly generate texturemap (test only)
+    readCSV();
+    //textureMap = data;
+
+    /* Randomly generate texturemap (test only)
     for (int i = 0; i < size; i++) {
         std::vector<int> column = {};
         for (int j = 0; j < size; j++) {
@@ -19,12 +59,15 @@ void Tilemap::Load(int size) {
             column.push_back(randint);
         }
         textureMap.push_back(column);
-    }
+    }*/
 
     // Render tilemap -> tiles -> colors
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
             switch (textureMap[j][i]) {
+            case 0:
+                randcolor = GREEN;
+                break;
             case 1:
                 randcolor = BLUE;
                 break;
