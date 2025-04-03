@@ -48,7 +48,7 @@ void Tilemap::Load()
     tilesStored = {};
     Color randcolor = BLACK;
 
-    readCSV();
+    textureMap = {{0, 0, 0}, {1, 1, 0}};
     //textureMap = data;
 
     /* Randomly generate texturemap (test only)
