@@ -8,39 +8,30 @@ Tilemap::Tilemap() {
     pos.relative.y = 0;
 }
 
-void Tilemap::readCSV() {
-    std::fstream fin;
-
-    // Open an existing file
-    fin.open("src/map1.csv", std::ios::in);
-
-    // Read the Data from the file
-    // as String Vector
-    std::vector<std::vector<std::string>> newdata;
-    std::vector<std::string> row;
-    std::string line, word, temp;
-
-    while (fin >> temp)
-    {
-        row.clear();
-        getline(fin, line);
-
-        
-        std::stringstream s(line);
-        while (getline(s, word, ','))
-        {
-            row.push_back(word);
-        }
-        newdata.push_back(row);
+std::vector<std::vector<int>> Tilemap::readCSV(const std::string& filename) {
+    std::vector<std::vector<int>> data;
+    std::ifstream file(filename);
+    
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return data;
     }
-    for (std::vector<std::string> rowp : newdata) {
-        std::vector<int> newvector;
-        for (std::string s : rowp) {
-            newvector.push_back(std::stoi(s));
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::vector<int> row;
+        std::stringstream ss(line);
+        std::string cell;
+
+        while (std::getline(ss, cell, ',')) {
+            row.push_back(std::stoi(cell));
         }
-        textureMap.push_back(newvector);
+
+        data.push_back(row);
     }
-    fin.close();
+
+    file.close();
+    return data;
 }
 
 void Tilemap::Load()
@@ -48,30 +39,29 @@ void Tilemap::Load()
     tilesStored = {};
     Color randcolor = BLACK;
 
-    textureMap = {{0, 0, 0}, {1, 1, 0}};
-    //textureMap = data;
-
-    /* Randomly generate texturemap (test only)
-    for (int i = 0; i < size; i++) {
-        std::vector<int> column = {};
-        for (int j = 0; j < size; j++) {
-            int randint = std::rand()%10;
-            column.push_back(randint);
+    auto data = readCSV("src/map1.csv");
+    
+    for (const auto& row : data) {
+        std::vector<int> newrow;
+        for (const auto& cell : row) {
+            newrow.push_back(cell);
+            std::cout << cell;
         }
-        textureMap.push_back(column);
-    }*/
-
+        textureMap.push_back(newrow);
+        std::cout << std::endl;
+    }
+    
     // Render tilemap -> tiles -> colors
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
             switch (textureMap[j][i]) {
-            case 0:
+            case 0: // default mud
                 randcolor = GREEN;
                 break;
-            case 1:
+            case 1: // default water
                 randcolor = BLUE;
                 break;
-            case 2:
+            case 2: // default solid
                 randcolor = GREEN;
                 break;
             case 3:
