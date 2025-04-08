@@ -9,3 +9,7 @@ Player::Player(Point newpos, Point newsize, Velocity newvel) {
 void Player::Draw() {
     DrawRectangle(GetPos().absolute.x-GetSize().x/2, GetPos().absolute.y-GetSize().y/2, GetSize().x, GetSize().y, BLACK);
 }
+
+void Player::Move(Tilemap* tilemap, Point newpos) {
+    tilemap->Move(newpos);
+}

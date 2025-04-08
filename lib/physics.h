@@ -3,6 +3,8 @@
 
 #include <utility>
 #include "sprite.h"
+#include "tilemap.h"
+#include "tile.h"
 #include "app.h"
 
 class Physics {

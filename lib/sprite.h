@@ -4,6 +4,8 @@
 #include <utility>
 #include <raylib.h>
 #include "velocity.h"
+#include "tilemap.h"
+#include "tile.h"
 
 class Point {
     public:
