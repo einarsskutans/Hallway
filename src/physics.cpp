@@ -15,5 +15,16 @@ void Physics::CollideBounds(Sprite* entity, Point boundspos, bool drawlines) {
 }
 
 void Physics::CollideTile(Sprite *entity, Tile *tile) {
-    
+    if (entity->pos.absolute.x+entity->size.x/2 > tile->pos.absolute.x-tile->size.x/2) {
+        DrawText(TextFormat("MORE THAN TILE X: %i", 1), 10, 10, 20, BLACK);
+    }
+    if (entity->pos.absolute.y+entity->size.y/2 > tile->pos.absolute.y-tile->size.y/2) {
+        DrawText(TextFormat("MORE THAN TILE Y: %i", 1), 10, 30, 20, BLACK);
+    }
+    if (entity->pos.absolute.x-entity->size.x/2 < tile->pos.absolute.x+tile->size.x/2) {
+        DrawText(TextFormat("LESS THAN TILE X: %i", 1), 10, 50, 20, BLACK);
+    }
+    if (entity->pos.absolute.y-entity->size.y/2 < tile->pos.absolute.y+tile->size.y/2) {
+        DrawText(TextFormat("LESS THAN TILE Y: %i", 1), 10, 70, 20, BLACK);
+    }
 }

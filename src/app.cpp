@@ -30,14 +30,17 @@ void App::Run() { // Main loop
         if (IsKeyDown(KEY_LEFT) && player1->GetVel().left.second) player1 -> Move(tilemap, {player1->GetVel().right.first, 0});
         if (IsKeyDown(KEY_UP) && player1->GetVel().top.second) player1 -> Move(tilemap, {0, player1->GetVel().bottom.first});
         if (IsKeyDown(KEY_DOWN) && player1->GetVel().bottom.second) player1 -> Move(tilemap, {0, player1->GetVel().top.first});
+
+        Physics::CollideTile(player1, tilemap->tilesStored[7]);
+
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
 
-        DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
-        DrawText(TextFormat("Tilemap size %i", tilemap->textureMap.size()), 10, 30, 20, BLACK);
-        DrawText(TextFormat("Tilemap element %i", tilemap->textureMap[0][1]), 10, 50, 20, BLACK);
-        DrawText(TextFormat("DATA %i", tilemap->data.size()), 10, 80, 20, BLACK);
+        //DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
+        //DrawText(TextFormat("Tilemap size %i", tilemap->textureMap.size()), 10, 30, 20, BLACK);
+        //DrawText(TextFormat("Tilemap element %i", tilemap->textureMap[0][1]), 10, 50, 20, BLACK);
+        //DrawText(TextFormat("DATA %i", tilemap->data.size()), 10, 80, 20, BLACK);
 
         tilemap->Render();
         player1->Draw();
