@@ -3,14 +3,13 @@
 
 #include <raylib.h>
 #include "sprite.h"
-#include "app.h"
 #include "tile.h"
+#include "tilemap.h"
+
 #include "string"
 #include "iostream"
-
 #include "sstream" // for reading CSV
 #include "fstream"
-
 
 class Tilemap {
     public:
