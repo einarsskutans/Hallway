@@ -5,5 +5,6 @@ Tile::Tile(Color newcolor) {
 }
 
 void Tile::Draw() {
-    DrawRectangle(GetPos().absolute.x, GetPos().absolute.y , 32, 32, color);
+    DrawRectangle(GetPos().absolute.x-size.x/2, GetPos().absolute.y-size.y/2, size.x, size.y, color);
+    //GetPos().absolute.x-GetSize().x/2, GetPos().absolute.y-GetSize().y/2, GetSize().x, GetSize().y
 }

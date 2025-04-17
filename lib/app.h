@@ -6,7 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include <time.h>
-#include "player.h"
+
 #include "physics.h"
 #include "sprite.h"
 #include "tilemap.h"

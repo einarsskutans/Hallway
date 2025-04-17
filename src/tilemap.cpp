@@ -72,8 +72,8 @@ void Tilemap::Load()
                 break;
             }
             Tile* newtile = new Tile(randcolor);
-            newtile->pos.absolute.x += i*32;
-            newtile->pos.absolute.y += j*32;
+            newtile->pos.absolute.x += i*newtile->size.x;
+            newtile->pos.absolute.y += j*newtile->size.y;
             tilesStored.push_back(newtile);
         }
     }

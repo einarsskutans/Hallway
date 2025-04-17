@@ -9,6 +9,7 @@ class Tile : public Sprite {
         Tile(Color newcolor);
         void Draw();
         Color color;
+        Point size = {32, 32};
     private:
         int texture; // temp
 };

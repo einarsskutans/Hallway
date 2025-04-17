@@ -3,10 +3,6 @@
 
 #include <raylib.h>
 #include "sprite.h"
-#include "app.h"
-#include "string"
-#include "velocity.h"
-#include "app.h"
 #include "string"
 #include "velocity.h"
 #include "tilemap.h"
