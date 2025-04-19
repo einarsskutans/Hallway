@@ -14,14 +14,14 @@ void App::Run() { // Main loop
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
-    tilemap->LoadAssets(3);
+    tilemap->pos.absolute = SCREENSIZE/2; // Player spawn
+    tilemap->LoadAssets(4);
     tilemap->Load();
-    Point bounds = {64, 64};
+
     srand(time(0));
 
     while (WindowShouldClose() == false){
         // Events; Player moves by moving the Tilemap itself
-        //player1->vel.Reset();
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
             player1->vel = {0, 0, vel, 0};
@@ -70,7 +70,7 @@ void App::Run() { // Main loop
         player1->Move(tilemap, {0, -player1->GetVel().bottom});
 
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
-            if (tilemap->tilesStored[i]->collide) {
+            if (tilemap->tilesStored[i]->solid) {
                 Physics::CollideTile(tilemap, player1, tilemap->tilesStored[i]);
             }
         }

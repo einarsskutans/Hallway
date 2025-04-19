@@ -45,16 +45,50 @@ void Tilemap::LoadAssets(int n) {
     }
 }
 
+void Tilemap::LoadTiles() {
+    Color color = BLACK;
+    bool solid = false;
+    Texture2D texture = assetMap[0];
+
+    for (int j = 0; j < textureMap.size(); j++) {
+        for (int i = 0; i < textureMap[j].size(); i++) {
+            solid = false;
+            switch (textureMap[j][i]) {
+            case GRASS:
+                texture = assetMap[0];
+                break;
+            case STONE:
+                texture = assetMap[1];
+                solid = true;
+                break;
+            case STONE_WALL_BOTTOM:
+                texture = assetMap[2];
+                solid = true;
+                break;
+            case WATER:
+                texture = assetMap[3];
+                solid = true;
+                break;
+            default:
+                color = BLACK;
+                break;
+            }
+            Tile* newtile = new Tile(color);
+            newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
+            newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
+            newtile->solid = solid;
+            newtile->texture = texture;
+            tilesStored.push_back(newtile);
+        }
+    }
+}
+
 void Tilemap::UnloadAssets() {
     
 }
 
-void Tilemap::Load()
-{
+void Tilemap::Load() {
     tilesStored = {};
-    Color randcolor = BLACK;
-    bool randcollide = false;
-    Texture2D randtexture = assetMap[0];
 
     auto data = readCSV("src/map1.csv");
     
@@ -68,41 +102,7 @@ void Tilemap::Load()
         std::cout << std::endl;
     }
     
-    // Render tilemap -> tiles -> colors
-    for (int j = 0; j < textureMap.size(); j++) {
-        for (int i = 0; i < textureMap[j].size(); i++) {
-            randcollide = false;
-            switch (textureMap[j][i]) {
-            case 0: // default mud
-                randcolor = GREEN;
-                randtexture = assetMap[0];
-                break;
-            case 1: // default water
-                randcolor = BLUE;
-                randtexture = assetMap[1];
-
-                randcollide = true;
-                break;
-            case 2: // default solid
-                randcolor = GREEN;
-                randtexture = assetMap[2];
-                randcollide = true;
-                break;
-            case 3:
-                randcolor = BLACK;
-                break;
-            default:
-                randcolor = YELLOW;
-                break;
-            }
-            Tile* newtile = new Tile(randcolor);
-            newtile->pos.absolute.x += i*newtile->size.x;
-            newtile->pos.absolute.y += j*newtile->size.y;
-            newtile->collide = randcollide;
-            newtile->texture = randtexture;
-            tilesStored.push_back(newtile);
-        }
-    }
+    LoadTiles(); // Assign tile types, append tiles
 }
 void Tilemap::Render() {
     Color color; // Substitute for textures

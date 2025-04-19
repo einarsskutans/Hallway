@@ -16,6 +16,7 @@ class Tilemap {
         Tilemap();
         std::vector<std::vector<int>> readCSV(const std::string& filename);
         void LoadAssets(int n);
+        void LoadTiles();
         void UnloadAssets();
         void Load();
         void Render();
@@ -26,6 +27,13 @@ class Tilemap {
         std::vector<std::vector<int>> data;
 
         std::vector<Texture2D> assetMap;
+
+        enum tileTypes {
+            GRASS = 0,
+            STONE = 1,
+            STONE_WALL_BOTTOM = 2,
+            WATER = 3
+        };
     private:
 };
 
