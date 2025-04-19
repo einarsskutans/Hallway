@@ -14,7 +14,7 @@ void App::Run() { // Main loop
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
-    tilemap->LoadAssets(2);
+    tilemap->LoadAssets(3);
     tilemap->Load();
     Point bounds = {64, 64};
     srand(time(0));
@@ -32,7 +32,6 @@ void App::Run() { // Main loop
             if (IsKeyDown(KEY_DOWN)) {
                 player1->vel = {0, 0, vel, vel};
             }
-            //player1->Move(tilemap, {player1->GetVel().left, 0});
         }
         else if (IsKeyDown(KEY_LEFT)) {
             player1->vel = {0, -vel, 0, 0};
@@ -43,7 +42,6 @@ void App::Run() { // Main loop
             if (IsKeyDown(KEY_DOWN)) {
                 player1->vel = {0, -vel, 0, vel};
             }
-            //player1->Move(tilemap, {player1->GetVel().right, 0});
         }
         if (IsKeyDown(KEY_UP)) {
             player1->vel = {-vel, 0, 0, 0};
@@ -54,7 +52,6 @@ void App::Run() { // Main loop
             if (IsKeyDown(KEY_LEFT)) {
                 player1->vel = {-vel, -vel, 0, 0};
             }
-            //player1->Move(tilemap, {0, player1->GetVel().bottom});
         }
         else if (IsKeyDown(KEY_DOWN)) {
             player1->vel = {0, 0, 0, vel};
@@ -65,8 +62,6 @@ void App::Run() { // Main loop
             if (IsKeyDown(KEY_LEFT)) {
                 player1->vel = {0, -vel, 0, vel};
             }
-
-            //player1->Move(tilemap, {0, player1->GetVel().top});
         }
 
         player1->Move(tilemap, {-player1->GetVel().left, 0});
@@ -86,7 +81,6 @@ void App::Run() { // Main loop
         
         tilemap->Render();
         player1->Draw();
-        //DrawTexture(testTexture, 100, 100, WHITE);
 
         DrawText(TextFormat("TOP: %i", player1->vel.top), 300, 10, 20, BLACK);
         DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 300, 30, 20, BLACK);

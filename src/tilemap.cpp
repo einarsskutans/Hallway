@@ -85,6 +85,8 @@ void Tilemap::Load()
                 break;
             case 2: // default solid
                 randcolor = GREEN;
+                randtexture = assetMap[2];
+                randcollide = true;
                 break;
             case 3:
                 randcolor = BLACK;
