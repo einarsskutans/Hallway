@@ -21,58 +21,57 @@ void App::Run() { // Main loop
     while (WindowShouldClose() == false){
         // Events; Player moves by moving the Tilemap itself
         //player1->vel.Reset();
-        player1->vel = {0, 0, 0, 0};
-        if (IsKeyDown(KEY_RIGHT)) {
-            player1->vel = {0, 0, vel, 0};
-
-            if (IsKeyDown(KEY_UP)) {
-                player1->vel = {-vel, 0, 1, 0};
-            }
-            if (IsKeyDown(KEY_DOWN)) {
-                player1->vel = {0, 0, vel, vel};
-            }
-            //player1->Move(tilemap, {player1->GetVel().left, 0});
-        }
-        else if (IsKeyDown(KEY_LEFT)) {
-            player1->vel = {0, -vel, 0, 0};
-
-            if (IsKeyDown(KEY_UP)) {
-                player1->vel = {-vel, -vel, 0, 0};
-            }
-            if (IsKeyDown(KEY_DOWN)) {
-                player1->vel = {0, -vel, 0, vel};
-            }
-            //player1->Move(tilemap, {player1->GetVel().right, 0});
-        }
-        if (IsKeyDown(KEY_UP)) {
-            player1->vel = {-vel, 0, 0, 0};
-
-            if (IsKeyDown(KEY_RIGHT)) {
-                player1->vel = {-vel, 0, vel, 0};
-            }
-            if (IsKeyDown(KEY_LEFT)) {
-                player1->vel = {-vel, -vel, 0, 0};
-            }
-            //player1->Move(tilemap, {0, player1->GetVel().bottom});
-        }
-        else if (IsKeyDown(KEY_DOWN)) {
-            player1->vel = {0, 0, 0, vel};
-
-            if (IsKeyDown(KEY_RIGHT)) {
-                player1->vel = {0, 0, vel, vel};
-            }
-            if (IsKeyDown(KEY_LEFT)) {
-                player1->vel = {0, -vel, 0, vel};
-            }
-
-            //player1->Move(tilemap, {0, player1->GetVel().top});
-        }
-
-        
-
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->collide) {
                 Physics::CollideTile(tilemap, player1, tilemap->tilesStored[i]);
+            }
+
+            // Movement events
+
+            player1->vel = {0, 0, 0, 0};
+            if (IsKeyDown(KEY_RIGHT)) {
+                player1->vel = {0, 0, vel, 0};
+
+                if (IsKeyDown(KEY_UP)) {
+                    player1->vel = {-vel, 0, 1, 0};
+                }
+                if (IsKeyDown(KEY_DOWN)) {
+                    player1->vel = {0, 0, vel, vel};
+                }
+                //player1->Move(tilemap, {player1->GetVel().left, 0});
+            }
+            else if (IsKeyDown(KEY_LEFT)) {
+                player1->vel = {0, -vel, 0, 0};
+
+                if (IsKeyDown(KEY_UP)) {
+                    player1->vel = {-vel, -vel, 0, 0};
+                }
+                if (IsKeyDown(KEY_DOWN)) {
+                    player1->vel = {0, -vel, 0, vel};
+                }
+                //player1->Move(tilemap, {player1->GetVel().right, 0});
+            }
+            if (IsKeyDown(KEY_UP)) {
+                player1->vel = {-vel, 0, 0, 0};
+
+                if (IsKeyDown(KEY_RIGHT)) {
+                    player1->vel = {-vel, 0, vel, 0};
+                }
+                if (IsKeyDown(KEY_LEFT)) {
+                    player1->vel = {-vel, -vel, 0, 0};
+                }
+                //player1->Move(tilemap, {0, player1->GetVel().bottom});
+            }
+            else if (IsKeyDown(KEY_DOWN)) {
+                player1->vel = {0, 0, 0, vel};
+
+                if (IsKeyDown(KEY_RIGHT)) {
+                    player1->vel = {0, 0, vel, vel};
+                }
+                if (IsKeyDown(KEY_LEFT)) {
+                    player1->vel = {0, -vel, 0, vel};
+                }
+                //player1->Move(tilemap, {0, player1->GetVel().top});
             }
         }
 
@@ -84,10 +83,6 @@ void App::Run() { // Main loop
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
-        //DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
-        //DrawText(TextFormat("Tilemap size %i", tilemap->textureMap.size()), 10, 30, 20, BLACK);
-        //DrawText(TextFormat("Tilemap element %i", tilemap->textureMap[0][1]), 10, 50, 20, BLACK);
-        //DrawText(TextFormat("DATA %i", tilemap->data.size()), 10, 80, 20, BLACK);
 
         tilemap->Render();
         player1->Draw();

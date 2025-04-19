@@ -14,7 +14,7 @@ void Physics::CollideBounds(Sprite* entity, Point boundspos, bool drawlines) {
     }
 }
 
-void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
+Velocity Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
     // Log
     if (entity->pos.absolute.x + entity->size.x/2 > tile->pos.absolute.x - tile->size.x/2) {
         DrawText(TextFormat("MORE THAN TILE X: %i", 1), 10, 10, 20, BLACK);
@@ -28,6 +28,7 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
     if (entity->pos.absolute.y - entity->size.y/2 < tile->pos.absolute.y + tile->size.y/2) {
         DrawText(TextFormat("LESS THAN TILE Y: %i", 1), 10, 70, 20, BLACK);
     }
+
     
     if (
         entity->pos.absolute.x + entity->size.x/2 > tile->pos.absolute.x - tile->size.x/2 &&
@@ -35,8 +36,8 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
         entity->pos.absolute.y + entity->size.y/2 > tile->pos.absolute.y - tile->size.y/2 &&
         entity->pos.absolute.y - entity->size.y/2 < tile->pos.absolute.y + tile->size.y/2
     ) {
-        DrawText(TextFormat("MOVED: %i", 1), 10, 90, 20, BLACK);
-        
+        DrawText(TextFormat("COLLISION: %i", 1), 10, 90, 20, BLACK);
+        /*
         if (entity->vel.top < 0) {
             //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.top});
             entity->vel.top = -entity->vel.top;
@@ -53,6 +54,7 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
             //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.bottom});
             entity->vel.bottom = -entity->vel.bottom;
         }
+        */
     }
 
     /*

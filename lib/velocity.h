@@ -19,8 +19,6 @@ class Velocity {
         int left;
         int right;
         int bottom;
-
-        std::vector<int> active = {0, 0, 0, 0};
 };
 
 #endif

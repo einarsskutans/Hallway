@@ -34,6 +34,7 @@ class Sprite {
         friend class Physics;
 
         Velocity vel;
+        Velocity blocked;
         Pos pos;
         Point size;
 
