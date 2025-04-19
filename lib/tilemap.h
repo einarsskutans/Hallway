@@ -14,8 +14,9 @@
 class Tilemap {
     public:
         Tilemap();
-        void GenerateMap(int bg, int size);
         std::vector<std::vector<int>> readCSV(const std::string& filename);
+        void LoadAssets(int n);
+        void UnloadAssets();
         void Load();
         void Render();
         void Move(Point newpos);
@@ -23,6 +24,8 @@ class Tilemap {
         std::vector<Tile*> tilesStored = {};
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
+
+        std::vector<Texture2D> assetMap;
     private:
 };
 

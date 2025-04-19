@@ -10,7 +10,7 @@ void App::Init(Point newScreensize, int fps, bool debug) {
     SetTargetFPS(fps);
 }
 void App::Run() { // Main loop
-    int vel = 1; // SPEED
+    int vel = 2; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
@@ -68,7 +68,10 @@ void App::Run() { // Main loop
             //player1->Move(tilemap, {0, player1->GetVel().top});
         }
 
-        
+        player1->Move(tilemap, {-player1->GetVel().left, 0});
+        player1->Move(tilemap, {-player1->GetVel().right, 0});
+        player1->Move(tilemap, {0, -player1->GetVel().top});
+        player1->Move(tilemap, {0, -player1->GetVel().bottom});
 
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->collide) {
@@ -76,21 +79,13 @@ void App::Run() { // Main loop
             }
         }
 
-        player1->Move(tilemap, {-player1->GetVel().left, 0});
-        player1->Move(tilemap, {-player1->GetVel().right, 0});
-        player1->Move(tilemap, {0, -player1->GetVel().top});
-        player1->Move(tilemap, {0, -player1->GetVel().bottom});
-
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
-        //DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
-        //DrawText(TextFormat("Tilemap size %i", tilemap->textureMap.size()), 10, 30, 20, BLACK);
-        //DrawText(TextFormat("Tilemap element %i", tilemap->textureMap[0][1]), 10, 50, 20, BLACK);
-        //DrawText(TextFormat("DATA %i", tilemap->data.size()), 10, 80, 20, BLACK);
-
+        
         tilemap->Render();
         player1->Draw();
+        //DrawTexture(testTexture, 100, 100, WHITE);
 
         DrawText(TextFormat("TOP: %i", player1->vel.top), 300, 10, 20, BLACK);
         DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 300, 30, 20, BLACK);

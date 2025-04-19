@@ -38,20 +38,20 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
         DrawText(TextFormat("MOVED: %i", 1), 10, 90, 20, BLACK);
         
         if (entity->vel.top < 0) {
-            //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.top});
-            entity->vel.top = -entity->vel.top;
+            entity->Move(tilemap, {0, entity->vel.top});
+            //entity->vel.top = -entity->vel.top;
         }
         if (entity->vel.right > 0) {
-            //entity->Move(tilemap, {entity->vel.right, entity->pos.relative.y});
-            entity->vel.right = -entity->vel.right;
+            entity->Move(tilemap, {entity->vel.right, 0});
+            //entity->vel.right = -entity->vel.right;
         }
         if (entity->vel.left < 0) {
-            //entity->Move(tilemap, {entity->vel.left, entity->pos.relative.y});
-            entity->vel.left = -entity->vel.left;
+            entity->Move(tilemap, {entity->vel.left, 0});
+            //entity->vel.left = -entity->vel.left;
         }
         if (entity->vel.bottom > 0) {
-            //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.bottom});
-            entity->vel.bottom = -entity->vel.bottom;
+            entity->Move(tilemap, {0, entity->vel.bottom});
+            //entity->vel.bottom = -entity->vel.bottom;
         }
     }
 

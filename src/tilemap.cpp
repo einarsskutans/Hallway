@@ -34,6 +34,21 @@ std::vector<std::vector<int>> Tilemap::readCSV(const std::string& filename) {
     return data;
 }
 
+void Tilemap::LoadAssets(int n) {
+    for (int i = 0; i < n; i++) {
+        Image image = LoadImage("textures/test.png"); // Load image in CPU memory (RAM)
+        Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
+
+        assetMap.push_back(texture);
+
+        UnloadImage(image);
+    }
+}
+
+void Tilemap::UnloadAssets() {
+    
+}
+
 void Tilemap::Load()
 {
     tilesStored = {};
