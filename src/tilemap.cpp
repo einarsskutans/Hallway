@@ -38,6 +38,7 @@ void Tilemap::Load()
 {
     tilesStored = {};
     Color randcolor = BLACK;
+    bool randcollide = false;
 
     auto data = readCSV("src/map1.csv");
     
@@ -54,12 +55,14 @@ void Tilemap::Load()
     // Render tilemap -> tiles -> colors
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
+            randcollide = false;
             switch (textureMap[j][i]) {
             case 0: // default mud
                 randcolor = GREEN;
                 break;
             case 1: // default water
                 randcolor = BLUE;
+                randcollide = true;
                 break;
             case 2: // default solid
                 randcolor = GREEN;
@@ -74,6 +77,7 @@ void Tilemap::Load()
             Tile* newtile = new Tile(randcolor);
             newtile->pos.absolute.x += i*newtile->size.x;
             newtile->pos.absolute.y += j*newtile->size.y;
+            newtile->collide = randcollide;
             tilesStored.push_back(newtile);
         }
     }

@@ -2,6 +2,14 @@
 #define VELOCITY_H
 
 #include <utility>
+#include <vector>
+
+enum sides {
+    TOP = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    BOTTOM = 3
+};
 
 class Velocity {
     public:
@@ -11,6 +19,8 @@ class Velocity {
         int left;
         int right;
         int bottom;
+
+        std::vector<int> active = {0, 0, 0, 0};
 };
 
 #endif

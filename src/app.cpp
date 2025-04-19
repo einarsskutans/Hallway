@@ -10,8 +10,8 @@ void App::Init(Point newScreensize, int fps, bool debug) {
     SetTargetFPS(fps);
 }
 void App::Run() { // Main loop
-    int vel = 4; // SPEED
-    Velocity defaultvel = {{-vel, true}, {-vel, true}, {vel, true}, {vel, true}};
+    int vel = 1; // SPEED
+    Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
     tilemap->Load();
@@ -21,26 +21,69 @@ void App::Run() { // Main loop
     while (WindowShouldClose() == false){
         // Events; Player moves by moving the Tilemap itself
         //player1->vel.Reset();
-        if (IsKeyDown(KEY_RIGHT)) { 
-            player1->Move(tilemap, {player1->GetVel().left, 0});
+        player1->vel = {0, 0, 0, 0};
+        if (IsKeyDown(KEY_RIGHT)) {
+            player1->vel = {0, 0, vel, 0};
+
+            if (IsKeyDown(KEY_UP)) {
+                player1->vel = {-vel, 0, 1, 0};
+            }
+            if (IsKeyDown(KEY_DOWN)) {
+                player1->vel = {0, 0, vel, vel};
+            }
+            //player1->Move(tilemap, {player1->GetVel().left, 0});
         }
-        if (IsKeyDown(KEY_LEFT)) {
-            player1->Move(tilemap, {player1->GetVel().right, 0});
+        else if (IsKeyDown(KEY_LEFT)) {
+            player1->vel = {0, -vel, 0, 0};
+
+            if (IsKeyDown(KEY_UP)) {
+                player1->vel = {-vel, -vel, 0, 0};
+            }
+            if (IsKeyDown(KEY_DOWN)) {
+                player1->vel = {0, -vel, 0, vel};
+            }
+            //player1->Move(tilemap, {player1->GetVel().right, 0});
         }
         if (IsKeyDown(KEY_UP)) {
-            player1->Move(tilemap, {0, player1->GetVel().bottom});
+            player1->vel = {-vel, 0, 0, 0};
+
+            if (IsKeyDown(KEY_RIGHT)) {
+                player1->vel = {-vel, 0, vel, 0};
+            }
+            if (IsKeyDown(KEY_LEFT)) {
+                player1->vel = {-vel, -vel, 0, 0};
+            }
+            //player1->Move(tilemap, {0, player1->GetVel().bottom});
         }
-        if (IsKeyDown(KEY_DOWN)) {
-            player1->Move(tilemap, {0, player1->GetVel().top});
+        else if (IsKeyDown(KEY_DOWN)) {
+            player1->vel = {0, 0, 0, vel};
+
+            if (IsKeyDown(KEY_RIGHT)) {
+                player1->vel = {0, 0, vel, vel};
+            }
+            if (IsKeyDown(KEY_LEFT)) {
+                player1->vel = {0, -vel, 0, vel};
+            }
+
+            //player1->Move(tilemap, {0, player1->GetVel().top});
         }
 
-        Physics::CollideTile(tilemap, player1, tilemap->tilesStored[7]);
+        
+
+        for (int i = 0; i < tilemap->tilesStored.size(); i++) {
+            if (tilemap->tilesStored[i]->collide) {
+                Physics::CollideTile(tilemap, player1, tilemap->tilesStored[i]);
+            }
+        }
+
+        player1->Move(tilemap, {-player1->GetVel().left, 0});
+        player1->Move(tilemap, {-player1->GetVel().right, 0});
+        player1->Move(tilemap, {0, -player1->GetVel().top});
+        player1->Move(tilemap, {0, -player1->GetVel().bottom});
 
         // Draw
         BeginDrawing();
         ClearBackground(GRAY);
-
-        DrawText(TextFormat("Player vel booleans %d %d %d %d", player1->vel.top.first, player1->vel.bottom.first, player1->vel.left.first, player1->vel.right.first), 10, 10, 20, BLACK);
         //DrawText(TextFormat("Tilemap pos %i %i %i %i", tilemap->pos.absolute.x, tilemap->pos.absolute.y, tilemap->pos.relative.x, tilemap->pos.relative.y), 10, 10, 20, BLACK);
         //DrawText(TextFormat("Tilemap size %i", tilemap->textureMap.size()), 10, 30, 20, BLACK);
         //DrawText(TextFormat("Tilemap element %i", tilemap->textureMap[0][1]), 10, 50, 20, BLACK);
@@ -48,6 +91,11 @@ void App::Run() { // Main loop
 
         tilemap->Render();
         player1->Draw();
+
+        DrawText(TextFormat("TOP: %i", player1->vel.top), 300, 10, 20, BLACK);
+        DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 300, 30, 20, BLACK);
+        DrawText(TextFormat("LEFT: %i", player1->vel.left), 300, 50, 20, BLACK);
+        DrawText(TextFormat("RIGHT: %i", player1->vel.right), 300, 70, 20, BLACK);
 
         EndDrawing();
     }

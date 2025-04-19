@@ -8,6 +8,7 @@ class Tile : public Sprite {
     public:
         Tile(Color newcolor);
         void Draw();
+        bool collide = false;
         Color color;
         Point size = {32, 32};
     private:

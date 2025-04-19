@@ -28,7 +28,7 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
     if (entity->pos.absolute.y - entity->size.y/2 < tile->pos.absolute.y + tile->size.y/2) {
         DrawText(TextFormat("LESS THAN TILE Y: %i", 1), 10, 70, 20, BLACK);
     }
-
+    
     if (
         entity->pos.absolute.x + entity->size.x/2 > tile->pos.absolute.x - tile->size.x/2 &&
         entity->pos.absolute.x - entity->size.x/2 < tile->pos.absolute.x + tile->size.x/2 &&
@@ -36,7 +36,23 @@ void Physics::CollideTile(Tilemap* tilemap, Player* entity, Tile* tile) {
         entity->pos.absolute.y - entity->size.y/2 < tile->pos.absolute.y + tile->size.y/2
     ) {
         DrawText(TextFormat("MOVED: %i", 1), 10, 90, 20, BLACK);
-        entity->Move(tilemap, {entity->vel.right.first, entity->pos.relative.y});
+        
+        if (entity->vel.top < 0) {
+            //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.top});
+            entity->vel.top = -entity->vel.top;
+        }
+        if (entity->vel.right > 0) {
+            //entity->Move(tilemap, {entity->vel.right, entity->pos.relative.y});
+            entity->vel.right = -entity->vel.right;
+        }
+        if (entity->vel.left < 0) {
+            //entity->Move(tilemap, {entity->vel.left, entity->pos.relative.y});
+            entity->vel.left = -entity->vel.left;
+        }
+        if (entity->vel.bottom > 0) {
+            //entity->Move(tilemap, {entity->pos.relative.x, entity->vel.bottom});
+            entity->vel.bottom = -entity->vel.bottom;
+        }
     }
 
     /*
