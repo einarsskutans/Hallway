@@ -14,6 +14,7 @@ void App::Run() { // Main loop
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
+    tilemap->LoadAssets(2);
     tilemap->Load();
     Point bounds = {64, 64};
     srand(time(0));

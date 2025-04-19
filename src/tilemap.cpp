@@ -35,8 +35,8 @@ std::vector<std::vector<int>> Tilemap::readCSV(const std::string& filename) {
 }
 
 void Tilemap::LoadAssets(int n) {
-    for (int i = 0; i < n; i++) {
-        Image image = LoadImage("textures/test.png"); // Load image in CPU memory (RAM)
+    for (int i = 1; i < n+1; i++) {
+        Image image = LoadImage(TextFormat("textures/asset%i.png", i)); // Load image in CPU memory (RAM)
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
 
         assetMap.push_back(texture);
@@ -54,6 +54,7 @@ void Tilemap::Load()
     tilesStored = {};
     Color randcolor = BLACK;
     bool randcollide = false;
+    Texture2D randtexture = assetMap[0];
 
     auto data = readCSV("src/map1.csv");
     
@@ -74,9 +75,12 @@ void Tilemap::Load()
             switch (textureMap[j][i]) {
             case 0: // default mud
                 randcolor = GREEN;
+                randtexture = assetMap[0];
                 break;
             case 1: // default water
                 randcolor = BLUE;
+                randtexture = assetMap[1];
+
                 randcollide = true;
                 break;
             case 2: // default solid
@@ -93,6 +97,7 @@ void Tilemap::Load()
             newtile->pos.absolute.x += i*newtile->size.x;
             newtile->pos.absolute.y += j*newtile->size.y;
             newtile->collide = randcollide;
+            newtile->texture = randtexture;
             tilesStored.push_back(newtile);
         }
     }
