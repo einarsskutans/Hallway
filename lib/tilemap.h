@@ -22,11 +22,11 @@ class Tilemap {
         void Render();
         void Move(Point newpos);
         Pos pos;
-        std::vector<Tile*> tilesStored = {};
+        std::vector<Tile*> tilesStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
 
-        std::vector<Texture2D> assetMap;
+        std::vector<Texture2D> assetsStored;
 
         enum tileTypes {
             GRASS = 0,

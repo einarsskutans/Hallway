@@ -39,7 +39,7 @@ void Tilemap::LoadAssets(int n) {
         Image image = LoadImage(TextFormat("textures/asset%i.png", i)); // Load image in CPU memory (RAM)
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
 
-        assetMap.push_back(texture);
+        assetsStored.push_back(texture);
 
         UnloadImage(image);
     }
@@ -48,25 +48,25 @@ void Tilemap::LoadAssets(int n) {
 void Tilemap::LoadTiles() {
     Color color = BLACK;
     bool solid = false;
-    Texture2D texture = assetMap[0];
+    Texture2D texture = assetsStored[0];
 
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
             solid = false;
             switch (textureMap[j][i]) {
             case GRASS:
-                texture = assetMap[0];
+                texture = assetsStored[0];
                 break;
             case STONE:
-                texture = assetMap[1];
+                texture = assetsStored[1];
                 solid = true;
                 break;
             case STONE_WALL_BOTTOM:
-                texture = assetMap[2];
+                texture = assetsStored[2];
                 solid = true;
                 break;
             case WATER:
-                texture = assetMap[3];
+                texture = assetsStored[3];
                 solid = true;
                 break;
             default:
