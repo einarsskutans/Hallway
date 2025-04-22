@@ -83,12 +83,12 @@ void App::Run(bool debug) { // Main loop
         player1->Draw();
 
         if (debug) {
-            DrawRectangle(0, 0, 140, 100, GRAY);
-            DrawRectangle(5, 5, 130, 90, WHITE);
-            DrawText(TextFormat("TOP: %i", player1->vel.top), 10, 10, 20, BLACK);
-            DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 10, 30, 20, BLACK);
-            DrawText(TextFormat("LEFT: %i", player1->vel.left), 10, 50, 20, BLACK);
-            DrawText(TextFormat("RIGHT: %i", player1->vel.right), 10, 70, 20, BLACK);
+            DrawRectangle(5, 5, 145, 100, GRAY);
+            DrawRectangle(5+2, 5+2, 145-4, 100-4, WHITE);
+            DrawText(TextFormat("TOP: %i", player1->vel.top), 5+4, 10, 20, BLACK);
+            DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 5+4, 30, 20, BLACK);
+            DrawText(TextFormat("LEFT: %i", player1->vel.left), 5+4, 50, 20, BLACK);
+            DrawText(TextFormat("RIGHT: %i", player1->vel.right), 5+4, 70, 20, BLACK);
         }
 
         EndDrawing();
