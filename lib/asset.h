@@ -7,9 +7,10 @@
 class Asset {
     public:
         Asset();
-        Asset(Texture2D texture, std::string name, int id);
+        Asset(Texture2D texture, std::string path, std::string name, int id);
 
         Texture2D texture;
+        std::string path;
         std::string name;
         int id;
 };

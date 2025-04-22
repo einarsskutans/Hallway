@@ -8,7 +8,7 @@ Tilemap::Tilemap() {
     pos.relative.y = 0;
 }
 
-std::vector<std::vector<int>> Tilemap::readCSV(const std::string& filename) {
+std::vector<std::vector<int>> Tilemap::readTilemap(const std::string& filename) {
     std::vector<std::vector<int>> data;
     std::ifstream file(filename);
     
@@ -34,12 +34,43 @@ std::vector<std::vector<int>> Tilemap::readCSV(const std::string& filename) {
     return data;
 }
 
+std::vector<Asset*> Tilemap::readAssets(const std::string& filename) {
+    std::vector<Asset*> data;
+    std::ifstream file(filename);
+    
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return data;
+    }
+
+    std::string line;
+    while (std::getline(file, line)) {
+        Asset* asset = new Asset();
+        std::stringstream ss(line);
+        std::string cell;
+        
+        std::getline(ss, cell, ',');
+        asset->path = cell.c_str();
+        std::getline(ss, cell, ',');
+        asset->name = cell;
+        std::getline(ss, cell, ',');
+        asset->id = std::stoi(cell);
+
+        data.push_back(asset);
+    }
+
+    file.close();
+
+    return data;
+}
+
 void Tilemap::LoadAssets(int n) {
-    for (int i = 1; i < n+1; i++) {
-        Image image = LoadImage(TextFormat("textures/asset%i.png", i)); // Load image in CPU memory (RAM)
+    assetsStored = readAssets("src/assets.csv");
+    for (int i = 0; i < assetsStored.size(); i++) {
+        Image image = LoadImage(assetsStored[i]->path.c_str()); // Load image in CPU memory (RAM)
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
 
-        assetsStored.push_back(texture);
+        assetsStored[i]->texture = texture;
 
         UnloadImage(image);
     }
@@ -48,25 +79,25 @@ void Tilemap::LoadAssets(int n) {
 void Tilemap::LoadTiles() {
     Color color = BLACK;
     bool solid = false;
-    Texture2D texture = assetsStored[0];
+    Texture2D texture = assetsStored[0]->texture;
 
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
             solid = false;
             switch (textureMap[j][i]) {
             case GRASS:
-                texture = assetsStored[0];
+                texture = assetsStored[0]->texture;
                 break;
             case STONE:
-                texture = assetsStored[1];
+                texture = assetsStored[1]->texture;
                 solid = true;
                 break;
             case STONE_WALL_BOTTOM:
-                texture = assetsStored[2];
+                texture = assetsStored[2]->texture;
                 solid = true;
                 break;
             case WATER:
-                texture = assetsStored[3];
+                texture = assetsStored[3]->texture;
                 solid = true;
                 break;
             default:
@@ -90,7 +121,7 @@ void Tilemap::UnloadAssets() {
 void Tilemap::Load() {
     tilesStored = {};
 
-    auto data = readCSV("src/map1.csv");
+    auto data = readTilemap("src/map1.csv");
     
     for (const auto& row : data) {
         std::vector<int> newrow;

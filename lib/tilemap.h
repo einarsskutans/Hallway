@@ -5,6 +5,7 @@
 #include "sprite.h"
 #include "tile.h"
 #include "tilemap.h"
+#include "asset.h"
 
 #include "string"
 #include "iostream"
@@ -14,7 +15,8 @@
 class Tilemap {
     public:
         Tilemap();
-        std::vector<std::vector<int>> readCSV(const std::string& filename);
+        std::vector<std::vector<int>> readTilemap(const std::string& filename);
+        std::vector<Asset*> readAssets(const std::string& filename);
         void LoadAssets(int n);
         void LoadTiles();
         void UnloadAssets();
@@ -26,7 +28,7 @@ class Tilemap {
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
 
-        std::vector<Texture2D> assetsStored;
+        std::vector<Asset*> assetsStored;
 
         enum tileTypes {
             GRASS = 0,

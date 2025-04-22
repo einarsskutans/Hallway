@@ -11,6 +11,7 @@
 #include "sprite.h"
 #include "tilemap.h"
 #include "tile.h"
+#include "asset.h"
 
 const Point SCREENSIZE = {540, 540};
 
