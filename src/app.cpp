@@ -90,6 +90,7 @@ void App::Run(bool debug) { // Main loop
             DrawText(TextFormat("LEFT: %i", player1->vel.left), 5+4, 50, 20, BLACK);
             DrawText(TextFormat("RIGHT: %i", player1->vel.right), 5+4, 70, 20, BLACK);
         }
+        DrawText(TextFormat("Shitfuck ass"), 40, 100, 70, BLACK);
 
         EndDrawing();
     }
