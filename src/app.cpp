@@ -10,7 +10,7 @@ void App::Init(Point newScreensize, int fps, bool debug) {
     SetTargetFPS(fps);
 }
 void App::Run(bool debug) { // Main loop
-    int vel = 2; // SPEED
+    int vel = 4; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
     Tilemap* tilemap = new Tilemap();
