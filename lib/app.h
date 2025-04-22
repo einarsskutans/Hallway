@@ -18,7 +18,7 @@ const Point SCREENSIZE = {540, 540};
 class App {
     public:
         void Init(Point newScreensize, int fps, bool debug);
-        void Run();
+        void Run(bool debug);
     private:
         Point screensize;
 };

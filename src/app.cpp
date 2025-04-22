@@ -9,7 +9,7 @@ void App::Init(Point newScreensize, int fps, bool debug) {
     InitWindow(screensize.x, screensize.y, "test");
     SetTargetFPS(fps);
 }
-void App::Run() { // Main loop
+void App::Run(bool debug) { // Main loop
     int vel = 2; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/2, {32, 32}, defaultvel);
@@ -82,10 +82,14 @@ void App::Run() { // Main loop
         tilemap->Render();
         player1->Draw();
 
-        DrawText(TextFormat("TOP: %i", player1->vel.top), 300, 10, 20, BLACK);
-        DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 300, 30, 20, BLACK);
-        DrawText(TextFormat("LEFT: %i", player1->vel.left), 300, 50, 20, BLACK);
-        DrawText(TextFormat("RIGHT: %i", player1->vel.right), 300, 70, 20, BLACK);
+        if (debug) {
+            DrawRectangle(0, 0, 140, 100, GRAY);
+            DrawRectangle(5, 5, 130, 90, WHITE);
+            DrawText(TextFormat("TOP: %i", player1->vel.top), 10, 10, 20, BLACK);
+            DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 10, 30, 20, BLACK);
+            DrawText(TextFormat("LEFT: %i", player1->vel.left), 10, 50, 20, BLACK);
+            DrawText(TextFormat("RIGHT: %i", player1->vel.right), 10, 70, 20, BLACK);
+        }
 
         EndDrawing();
     }
