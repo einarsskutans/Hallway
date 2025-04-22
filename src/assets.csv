@@ -1,4 +1,4 @@
-textures/asset1.png,grass,1
-textures/asset2.png,stone,0
-textures/asset3.png,stone_wall,2
-textures/asset4.png,water,3
+textures/asset1.png,grass,0,0
+textures/asset2.png,stone,1,1
+textures/asset3.png,stone_wall,2,1
+textures/asset4.png,water,3,1

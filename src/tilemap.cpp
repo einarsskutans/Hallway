@@ -55,6 +55,8 @@ std::vector<Asset*> Tilemap::readAssets(const std::string& filename) {
         asset->name = cell;
         std::getline(ss, cell, ',');
         asset->id = std::stoi(cell);
+        std::getline(ss, cell, ',');
+        asset->solid = std::stoi(cell);
 
         data.push_back(asset);
     }
@@ -78,37 +80,21 @@ void Tilemap::LoadAssets(int n) {
 
 void Tilemap::LoadTiles() {
     Color color = BLACK;
-    bool solid = false;
     Texture2D texture = assetsStored[0]->texture;
 
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
-            solid = false;
-            switch (textureMap[j][i]) {
-            case GRASS:
-                texture = assetsStored[0]->texture;
-                break;
-            case STONE:
-                texture = assetsStored[1]->texture;
-                solid = true;
-                break;
-            case STONE_WALL_BOTTOM:
-                texture = assetsStored[2]->texture;
-                solid = true;
-                break;
-            case WATER:
-                texture = assetsStored[3]->texture;
-                solid = true;
-                break;
-            default:
-                color = BLACK;
-                break;
-            }
+
             Tile* newtile = new Tile(color);
+            for (Asset* asset : assetsStored) {
+                if (asset->id == textureMap[j][i]) {
+                    newtile->texture = asset->texture;
+                    newtile->solid = asset->solid;
+                }
+            }
+
             newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
             newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
-            newtile->solid = solid;
-            newtile->texture = texture;
             tilesStored.push_back(newtile);
         }
     }
