@@ -6,6 +6,7 @@
 #include <vector>
 #include <cstdlib>
 #include <time.h>
+#include <math.h>
 
 #include "physics.h"
 #include "sprite.h"

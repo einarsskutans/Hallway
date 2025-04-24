@@ -11,7 +11,7 @@ class Tile : public Sprite {
         bool solid = false;
         Color color;
         Texture2D texture;
-        Point size = {32, 32};
+        Point size = {8, 8};
 };
 
 #endif

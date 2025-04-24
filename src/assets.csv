@@ -1,13 +1,4 @@
-textures/asset1.png,grass,0,0
-textures/asset2.png,stone,1,1
-textures/asset3.png,stone_wall,2,1
-textures/asset4.png,water,3,1
-textures/asset6.png,floor_default1,4,0
-textures/asset7.png,floor_default2,5,0
-textures/asset8.png,floor_default3,6,0
-textures/asset9.png,floor_hallway1,7,0
-textures/asset10.png,wall_default_l,8,1
-textures/asset11.png,wall_default_r,9,1
-textures/asset12.png,wall_default_b,10,1
-textures/asset13.png,wall_default_t,11,1
-textures/asset99.png,vending,99,1
+textures/grass_default1.png,grass_default1,0,0
+textures/wall_default_l.png,wall_default_l,1,1
+textures/wall_default_r.png,wall_default_r,2,1
+textures/floor_default1.png,floor_default1,3,0

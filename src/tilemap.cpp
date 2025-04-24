@@ -70,6 +70,7 @@ void Tilemap::LoadAssets(int n) {
     assetsStored = readAssets("src/assets.csv");
     for (int i = 0; i < assetsStored.size(); i++) {
         Image image = LoadImage(assetsStored[i]->path.c_str()); // Load image in CPU memory (RAM)
+
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
 
         assetsStored[i]->texture = texture;
