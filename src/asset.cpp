@@ -1,4 +1,4 @@
-#include "asset.h"
+#include "lib/asset.h"
 
 Asset::Asset() {
 }

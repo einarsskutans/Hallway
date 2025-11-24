@@ -1,4 +1,4 @@
-#include "tile.h"
+#include "lib/tile.h"
 
 Tile::Tile(Color newcolor) {
     color = newcolor;

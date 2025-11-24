@@ -1,7 +1,7 @@
-#include "tilemap.h"
+#include "lib/tilemap.h"
 
 Tilemap::Tilemap() {
-    std::srand(std::time({}));
+    std::srand(time({}));
     pos.absolute.x = 0;
     pos.absolute.y = 0;
     pos.relative.x = 0;
