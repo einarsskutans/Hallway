@@ -1,4 +1,4 @@
-#include "physics.h"
+#include "lib/physics.h"
 
 void Physics::CollideBounds(Sprite* entity, std::pair<int, int> boundspos, bool drawlines) {
     if (entity->pos.first - entity->size.first/2 < boundspos.first) entity->vel.left.second = false;
