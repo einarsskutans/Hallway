@@ -2,15 +2,23 @@
 #define VELOCITY_H
 
 #include <utility>
+#include <vector>
+
+enum sides {
+    TOP = 0,
+    LEFT = 1,
+    RIGHT = 2,
+    BOTTOM = 3
+};
 
 class Velocity {
     public:
         Velocity();
-        Velocity(std::pair<int, bool> newtop, std::pair<int, bool> newleft, std::pair<int, bool> newright, std::pair<int, bool> newbottom);
-        std::pair<int, bool> top;
-        std::pair<int, bool> left;
-        std::pair<int, bool> right;
-        std::pair<int, bool> bottom;
+        Velocity(int newtop, int newleft, int newright, int newbottom);
+        int top;
+        int left;
+        int right;
+        int bottom;
 };
 
 #endif

@@ -6,18 +6,22 @@
 #include <vector>
 #include <cstdlib>
 #include <time.h>
-#include "player.h"
+#include <math.h>
+
 #include "physics.h"
 #include "sprite.h"
+#include "tilemap.h"
+#include "tile.h"
+#include "asset.h"
 
-const std::pair<int, int> SCREENSIZE = {540, 540};
+const Point SCREENSIZE = {540, 540};
 
 class App {
     public:
-        void Init(std::pair<int, int> newScreensize, int fps, bool debug);
-        void Run();
+        void Init(Point newScreensize, int fps, bool debug);
+        void Run(bool debug);
     private:
-        std::pair<int, int> screensize;
+        Point screensize;
 };
 
 #endif

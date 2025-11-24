@@ -1,11 +1,16 @@
 #include "lib/player.h"
 
-Player::Player(std::pair<int, int> newpos, std::pair<int, int> newsize, Velocity newvel) {
+Player::Player(Point newpos, Point newsize, Velocity newvel) {
     SetPos(newpos);
     SetSize(newsize);
     SetVel(newvel);
 }
 
 void Player::Draw() {
-    DrawRectangle(GetPos().first-GetSize().first/2, GetPos().second-GetSize().second/2, GetSize().first, GetSize().second, BLACK);
+    DrawRectangle(GetPos().absolute.x-GetSize().x/2, GetPos().absolute.y-GetSize().y/2, size.x, size.y, BLACK);
+}
+
+void Player::Move(Tilemap* tilemap, Point newpos) {
+    pos.relative = {-newpos.x, -newpos.y};
+    tilemap->Move(newpos);
 }

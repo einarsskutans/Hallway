@@ -3,14 +3,16 @@
 
 #include <raylib.h>
 #include "sprite.h"
-#include "app.h"
 #include "string"
 #include "velocity.h"
+#include "tilemap.h"
+#include "tile.h"
 
 class Player : public Sprite {
     public:
-        Player(std::pair<int, int> newpos, std::pair<int, int> newsize, Velocity newvel);
+        Player(Point newpos, Point newsize, Velocity newvel);
         void Draw();
+        void Move(Tilemap* tilemap, Point newpos);
     private:
         std::string name;
 };
