@@ -13,6 +13,8 @@
 #include "tilemap.h"
 #include "tile.h"
 #include "asset.h"
+#include "structure.h"
+#include "structmap.h"
 
 const Point SCREENSIZE = {1280, 720};
 

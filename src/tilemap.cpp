@@ -109,8 +109,8 @@ void Tilemap::LoadTiles() {
                 }
             }
 
-            newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
-            newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
+            newtile->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
+            newtile->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
             tilesStored.push_back(newtile);
         }
     }
@@ -123,7 +123,7 @@ void Tilemap::UnloadAssets() {
 void Tilemap::Load() {
     tilesStored = {};
 
-    GenerateTileMap("src/map1.csv", {8, 8});
+    GenerateTileMap("src/map1.csv", {64, 64});
     auto data = readTilemap("src/map1.csv");
     
     for (const auto& row : data) {

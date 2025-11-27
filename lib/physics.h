@@ -6,10 +6,12 @@
 #include "app.h"
 #include "tilemap.h"
 #include "tile.h"
+#include "structmap.h"
+#include "structure.h"
 
 class Physics {
     public:
-        static void CollideTile(Tilemap* tilemap, Player* entity, Tile* tile); // Collision with a single tiles
+        static void CollideTile(Tilemap* tilemap, Structmap* structmap, Player* entity, Tile* tile); // Collision with a single tiles
 };
 
 #endif

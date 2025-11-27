@@ -73,15 +73,15 @@ void Structmap::GenerateStructmap(const std::string& filename, Point mapSize) {
         std::cerr << "Failed to open file: " << filename << std::endl;
     }
 
-    int empty = 0;
     int r = 0;
 
     for (int row = 0; row < mapSize.y; row++) {
         for (int col = 0; col < mapSize.x; col++) {
-            r = GetRandomValue(3, 8);
-            if (r = 3) {
-                file << "3,";    
-            } else {
+            r = GetRandomValue(3, 64*10);
+            if (r == 3) {
+                file << "4,";
+            } 
+            else {
                 file << "0,";
             }
         }
@@ -105,21 +105,25 @@ void Structmap::LoadAssets(int n) {
 }
 
 void Structmap::LoadStructures() {
-    Color color = BLACK;
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
-            
-            Tile* newtile = new Tile(color);
-            for (Asset* asset : assetsStored) {
-                if (asset->id == textureMap[j][i]) {
-                    newtile->texture = asset->texture;
-                    newtile->solid = asset->solid;
+            Structure* newstruct = new Structure();
+            if (textureMap[j][i] != 0) {
+                for (Asset* asset : assetsStored) {
+                    if (asset->id == textureMap[j][i]) {
+                        newstruct->texture = asset->texture;
+                        newstruct->solid = asset->solid;
+                    }
                 }
-            }
 
-            newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
-            newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
-            structuresStored.push_back(newtile);
+                newstruct->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
+                newstruct->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
+                structuresStored.push_back(newstruct);
+            }
+            else if (textureMap[j][i] == 0) {
+                newstruct->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
+                newstruct->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
+            }
         }
     }
 }
@@ -131,7 +135,7 @@ void Structmap::UnloadAssets() {
 void Structmap::Load() {
     structuresStored = {};
 
-    GenerateStructmap("src/map2.csv", {8, 8});
+    GenerateStructmap("src/map2.csv", {64, 64});
     auto data = readStructmap("src/map2.csv");
     
     for (const auto& row : data) {
@@ -148,14 +152,14 @@ void Structmap::Load() {
 }
 void Structmap::Render() {
     Color color; // Substitute for textures
-    for (Tile* tile : structuresStored) {
-        tile->Draw();
+    for (Structure* structure : structuresStored) {
+        structure->Draw();
     }
 }
 
 void Structmap::Move(Point newpos) {
-    for (Tile* tile : structuresStored) {
-        tile->pos.absolute.x += newpos.x;
-        tile->pos.absolute.y += newpos.y;
+    for (Structure* structure : structuresStored) {
+        structure->pos.absolute.x += newpos.x;
+        structure->pos.absolute.y += newpos.y;
     }
 }

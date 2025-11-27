@@ -10,7 +10,8 @@ void Player::Draw() {
     DrawRectangle(GetPos().absolute.x-GetSize().x/2, GetPos().absolute.y-GetSize().y/2, size.x, size.y, BLACK);
 }
 
-void Player::Move(Tilemap* tilemap, Point newpos) {
+void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
     pos.relative = {-newpos.x, -newpos.y};
     tilemap->Move(newpos);
+    structmap->Move(newpos);
 }

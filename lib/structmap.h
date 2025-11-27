@@ -3,8 +3,8 @@
 
 #include <raylib.h>
 #include "sprite.h"
-#include "tile.h"
-#include "Structmap.h"
+#include "structure.h"
+#include "structmap.h"
 #include "asset.h"
 
 #include "string"
@@ -25,11 +25,13 @@ class Structmap {
         void Render();
         void Move(Point newpos);
         Pos pos;
-        std::vector<Tile*> structuresStored;
+        std::vector<Structure*> structuresStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
 
         std::vector<Asset*> assetsStored;
+
+        int tilesize = 8;
 
         enum tileTypes {
             GRASS = 0,

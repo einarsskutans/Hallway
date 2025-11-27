@@ -16,10 +16,16 @@ void App::Run(bool debug) { // Main loop
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
     camera.zoom = 4.0f;
+
     Tilemap* tilemap = new Tilemap();
     tilemap->pos.absolute = SCREENSIZE/2; // Player spawn
     tilemap->LoadAssets(4);
     tilemap->Load();
+    
+    Structmap* structmap = new Structmap();
+    structmap->pos.absolute = SCREENSIZE/2;
+    structmap->LoadAssets(4);
+    structmap->Load();
 
     srand(time(0));
 
@@ -69,14 +75,14 @@ void App::Run(bool debug) { // Main loop
             }
         }
 
-        player1->Move(tilemap, {-player1->GetVel().left, 0});
-        player1->Move(tilemap, {-player1->GetVel().right, 0});
-        player1->Move(tilemap, {0, -player1->GetVel().top});
-        player1->Move(tilemap, {0, -player1->GetVel().bottom});
+        player1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
+        player1->Move(tilemap, structmap, {-player1->GetVel().right, 0});
+        player1->Move(tilemap, structmap, {0, -player1->GetVel().top});
+        player1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
 
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
-                Physics::CollideTile(tilemap, player1, tilemap->tilesStored[i]);
+                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
             }
         }
 
@@ -87,6 +93,8 @@ void App::Run(bool debug) { // Main loop
         BeginMode2D(camera);
         
         tilemap->Render();
+        structmap->Render();
+        
         player1->Draw();
 
         if (debug) {
