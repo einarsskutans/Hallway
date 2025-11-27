@@ -13,10 +13,16 @@
 class Player : public Sprite {
     public:
         Player(Point newpos, Point newsize, Velocity newvel);
+        void LoadAsset();
         void Draw();
         void Move(Tilemap* tilemap, Structmap* structmap, Point newpos);
+        Velocity orientation; // Velocity class just to figure out sides
     private:
         std::string name;
+        Texture2D textureDefault;
+        Texture2D textureLeft;
+        Texture2D textureDown;
+        Texture2D textureRight;
 };
 
 #endif

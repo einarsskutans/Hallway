@@ -33,14 +33,6 @@ class Tilemap {
         std::vector<Asset*> assetsStored;
 
         int tilesize = 8;
-
-        enum tileTypes {
-            GRASS = 0,
-            STONE = 1,
-            STONE_WALL_BOTTOM = 2,
-            WATER = 3
-        };
-    private:
 };
 
 #endif

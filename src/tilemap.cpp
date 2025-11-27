@@ -123,8 +123,8 @@ void Tilemap::UnloadAssets() {
 void Tilemap::Load() {
     tilesStored = {};
 
-    GenerateTileMap("src/map1.csv");
-    auto data = readTilemap("src/map1.csv");
+    GenerateTileMap("src/datamapTiles.csv");
+    auto data = readTilemap("src/datamapTiles.csv");
     
     for (const auto& row : data) {
         std::vector<int> newrow;

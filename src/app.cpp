@@ -13,18 +13,19 @@ void App::Run(bool debug) { // Main loop
     int vel = 1; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player(SCREENSIZE/8, {8, 8}, defaultvel);
+    player1->LoadAsset();
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
     camera.zoom = 4.0f;
 
     Tilemap* tilemap = new Tilemap();
     tilemap->pos.absolute = SCREENSIZE/2; // Player spawn
-    tilemap->LoadAssets(4);
+    tilemap->LoadAssets(5);
     tilemap->Load();
     
     Structmap* structmap = new Structmap();
     structmap->pos.absolute = SCREENSIZE/2;
-    structmap->LoadAssets(4);
+    structmap->LoadAssets(5);
     structmap->Load();
 
     srand(time(0));
@@ -36,6 +37,7 @@ void App::Run(bool debug) { // Main loop
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
             player1->vel = {0, 0, vel, 0};
+            player1->orientation = {0, 0, 1, 0};
 
             if (IsKeyDown(KEY_UP)) {
                 player1->vel = {-vel, 0, 1, 0};
@@ -46,6 +48,7 @@ void App::Run(bool debug) { // Main loop
         }
         else if (IsKeyDown(KEY_LEFT)) {
             player1->vel = {0, -vel, 0, 0};
+            player1->orientation = {0, 1, 0, 0};
 
             if (IsKeyDown(KEY_UP)) {
                 player1->vel = {-vel, -vel, 0, 0};
@@ -56,6 +59,7 @@ void App::Run(bool debug) { // Main loop
         }
         if (IsKeyDown(KEY_UP)) {
             player1->vel = {-vel, 0, 0, 0};
+            player1->orientation = {1, 0, 0, 0};
 
             if (IsKeyDown(KEY_RIGHT)) {
                 player1->vel = {-vel, 0, vel, 0};
@@ -66,6 +70,7 @@ void App::Run(bool debug) { // Main loop
         }
         else if (IsKeyDown(KEY_DOWN)) {
             player1->vel = {0, 0, 0, vel};
+            player1->orientation = {0, 0, 0, 1};
 
             if (IsKeyDown(KEY_RIGHT)) {
                 player1->vel = {0, 0, vel, vel};
@@ -82,12 +87,12 @@ void App::Run(bool debug) { // Main loop
 
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
-                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i], structmap->structuresStored[i]);
+                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
             }
         }
-        for (int i = 0; i < structmap->structuresStored.size(); i++) { // REDUNDANT PLEASE FIX
+        for (int i = 0; i < structmap->structuresStored.size(); i++) {
             if (structmap->structuresStored[i]->solid) {
-                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i], structmap->structuresStored[i]);
+                Physics::CollideStructure(tilemap, structmap, player1, structmap->structuresStored[i]);
             }
         }
 

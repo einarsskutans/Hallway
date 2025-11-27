@@ -34,13 +34,10 @@ class Structmap {
 
         int tilesize = 8;
 
-        enum tileTypes {
-            GRASS = 0,
-            STONE = 1,
-            STONE_WALL_BOTTOM = 2,
-            WATER = 3
+        enum structureSpawnRate { // 0 - 100 as in %
+            CHANCE_HOUSE = 4,
+            CHANCE_BUSH = 40,
         };
-    private:
 };
 
 #endif

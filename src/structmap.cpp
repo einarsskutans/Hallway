@@ -73,14 +73,19 @@ void Structmap::GenerateStructmap(const std::string& filename) {
         std::cerr << "Failed to open file: " << filename << std::endl;
     }
 
-    int r = 0;
+    int r;
 
     for (int row = 0; row < mapSize.y; row++) {
         for (int col = 0; col < mapSize.x; col++) {
-            r = GetRandomValue(3, 64*10);
-            if (r == 3) {
+
+            // Reading chance percentages
+            r = GetRandomValue(1, 100*mapSize.x);
+            if (r <= CHANCE_HOUSE) {
                 file << "4,";
-            } 
+            }
+            else if (r <= CHANCE_BUSH) {
+                file << "5,";
+            }
             else {
                 file << "0,";
             }
@@ -135,8 +140,8 @@ void Structmap::UnloadAssets() {
 void Structmap::Load() {
     structuresStored = {};
 
-    GenerateStructmap("src/map2.csv");
-    auto data = readStructmap("src/map2.csv");
+    GenerateStructmap("src/datamapStructures.csv");
+    auto data = readStructmap("src/datamapStructures.csv");
     
     for (const auto& row : data) {
         std::vector<int> newrow;
