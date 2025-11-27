@@ -1,10 +1,10 @@
-#ifndef TILEMAP_H
-#define TILEMAP_H
+#ifndef STRUCTMAP_H
+#define STRUCTMAP_H
 
 #include <raylib.h>
 #include "sprite.h"
 #include "tile.h"
-#include "tilemap.h"
+#include "Structmap.h"
 #include "asset.h"
 
 #include "string"
@@ -12,20 +12,20 @@
 #include "sstream" // for reading CSV
 #include "fstream"
 
-class Tilemap {
+class Structmap {
     public:
-        Tilemap();
-        std::vector<std::vector<int>> readTilemap(const std::string& filename);
+        Structmap();
+        std::vector<std::vector<int>> readStructmap(const std::string& filename);
         std::vector<Asset*> readAssets(const std::string& filename);
-        void GenerateTileMap(const std::string& filename, Point mapSize);
+        void GenerateStructmap(const std::string& filename, Point mapSize);
         void LoadAssets(int n);
-        void LoadTiles();
+        void LoadStructures();
         void UnloadAssets();
         void Load();
         void Render();
         void Move(Point newpos);
         Pos pos;
-        std::vector<Tile*> tilesStored;
+        std::vector<Tile*> structuresStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
 

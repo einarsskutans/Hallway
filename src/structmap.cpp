@@ -1,6 +1,6 @@
-#include "lib/tilemap.h"
+#include "lib/structmap.h"
 
-Tilemap::Tilemap() {
+Structmap::Structmap() {
     std::srand(time({}));
     pos.absolute.x = 0;
     pos.absolute.y = 0;
@@ -8,7 +8,7 @@ Tilemap::Tilemap() {
     pos.relative.y = 0;
 }
 
-std::vector<std::vector<int>> Tilemap::readTilemap(const std::string& filename) {
+std::vector<std::vector<int>> Structmap::readStructmap(const std::string& filename) {
     std::vector<std::vector<int>> data;
     std::ifstream file(filename);
     
@@ -34,7 +34,7 @@ std::vector<std::vector<int>> Tilemap::readTilemap(const std::string& filename) 
     return data;
 }
 
-std::vector<Asset*> Tilemap::readAssets(const std::string& filename) {
+std::vector<Asset*> Structmap::readAssets(const std::string& filename) {
     std::vector<Asset*> data;
     std::ifstream file(filename);
     
@@ -66,16 +66,24 @@ std::vector<Asset*> Tilemap::readAssets(const std::string& filename) {
     return data;
 }
 
-void Tilemap::GenerateTileMap(const std::string& filename, Point mapSize) {
+void Structmap::GenerateStructmap(const std::string& filename, Point mapSize) {
     std::ofstream file(filename);
     
     if (!file.is_open()) {
         std::cerr << "Failed to open file: " << filename << std::endl;
     }
 
+    int empty = 0;
+    int r = 0;
+
     for (int row = 0; row < mapSize.y; row++) {
         for (int col = 0; col < mapSize.x; col++) {
-            file << GetRandomValue(1, 3) << ",";
+            r = GetRandomValue(3, 8);
+            if (r = 3) {
+                file << "3,";    
+            } else {
+                file << "0,";
+            }
         }
         file << "\n";
     }
@@ -83,7 +91,7 @@ void Tilemap::GenerateTileMap(const std::string& filename, Point mapSize) {
     file.close();
 }
 
-void Tilemap::LoadAssets(int n) {
+void Structmap::LoadAssets(int n) {
     assetsStored = readAssets("src/assets.csv");
     for (int i = 0; i < assetsStored.size(); i++) {
         Image image = LoadImage(assetsStored[i]->path.c_str()); // Load image in CPU memory (RAM)
@@ -96,11 +104,11 @@ void Tilemap::LoadAssets(int n) {
     }
 }
 
-void Tilemap::LoadTiles() {
+void Structmap::LoadStructures() {
     Color color = BLACK;
     for (int j = 0; j < textureMap.size(); j++) {
         for (int i = 0; i < textureMap[j].size(); i++) {
-
+            
             Tile* newtile = new Tile(color);
             for (Asset* asset : assetsStored) {
                 if (asset->id == textureMap[j][i]) {
@@ -111,20 +119,20 @@ void Tilemap::LoadTiles() {
 
             newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
             newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
-            tilesStored.push_back(newtile);
+            structuresStored.push_back(newtile);
         }
     }
 }
 
-void Tilemap::UnloadAssets() {
+void Structmap::UnloadAssets() {
     
 }
 
-void Tilemap::Load() {
-    tilesStored = {};
+void Structmap::Load() {
+    structuresStored = {};
 
-    GenerateTileMap("src/map1.csv", {8, 8});
-    auto data = readTilemap("src/map1.csv");
+    GenerateStructmap("src/map2.csv", {8, 8});
+    auto data = readStructmap("src/map2.csv");
     
     for (const auto& row : data) {
         std::vector<int> newrow;
@@ -136,17 +144,17 @@ void Tilemap::Load() {
         std::cout << std::endl;
     }
     
-    LoadTiles(); // Assign tile types, append tiles
+    LoadStructures(); // Assign tile types, append tiles
 }
-void Tilemap::Render() {
+void Structmap::Render() {
     Color color; // Substitute for textures
-    for (Tile* tile : tilesStored) {
+    for (Tile* tile : structuresStored) {
         tile->Draw();
     }
 }
 
-void Tilemap::Move(Point newpos) {
-    for (Tile* tile : tilesStored) {
+void Structmap::Move(Point newpos) {
+    for (Tile* tile : structuresStored) {
         tile->pos.absolute.x += newpos.x;
         tile->pos.absolute.y += newpos.y;
     }
