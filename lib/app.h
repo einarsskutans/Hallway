@@ -14,7 +14,7 @@
 #include "tile.h"
 #include "asset.h"
 
-const Point SCREENSIZE = {540, 540};
+const Point SCREENSIZE = {1280, 720};
 
 class App {
     public:

@@ -79,26 +79,48 @@ void Tilemap::LoadAssets(int n) {
     }
 }
 
-void Tilemap::LoadTiles() {
+void Tilemap::LoadTiles(bool loadFromMap, Point mapSize) {
     Color color = BLACK;
-    Texture2D texture = assetsStored[0]->texture;
 
-    for (int j = 0; j < textureMap.size(); j++) {
-        for (int i = 0; i < textureMap[j].size(); i++) {
+    if (loadFromMap) { // Load tiles from a .csv file
+        for (int j = 0; j < textureMap.size(); j++) {
+            for (int i = 0; i < textureMap[j].size(); i++) {
 
-            Tile* newtile = new Tile(color);
-            for (Asset* asset : assetsStored) {
-                if (asset->id == textureMap[j][i]) {
-                    newtile->texture = asset->texture;
-                    newtile->solid = asset->solid;
+                Tile* newtile = new Tile(color);
+                for (Asset* asset : assetsStored) {
+                    if (asset->id == textureMap[j][i]) {
+                        newtile->texture = asset->texture;
+                        newtile->solid = asset->solid;
+                    }
                 }
-            }
 
-            newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
-            newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
-            tilesStored.push_back(newtile);
+                newtile->pos.absolute.x += i*newtile->size.x - textureMap[j].size()/4*newtile->size.x;
+                newtile->pos.absolute.y += j*newtile->size.y - textureMap.size()/4*newtile->size.y;
+                tilesStored.push_back(newtile);
+            }
         }
     }
+
+    else if (!loadFromMap) { // Random generation (background)
+        int variety = 3; // How many backgrounds tile assets i've drawn
+        int r;
+
+        for (int j = 0; j < mapSize.y; j++) {
+            for (int i = 0; i < mapSize.x; i++) {
+                Tile* newtile = new Tile(color);
+                
+                r = GetRandomValue(0, variety-1);
+                newtile->texture = assetsStored[r]->texture;
+                newtile->solid = assetsStored[r]->solid;
+
+                newtile->pos.absolute.x += i*newtile->size.x - mapSize.x /4*newtile->size.x;
+                newtile->pos.absolute.y += j*newtile->size.y - mapSize.y /4*newtile->size.y;
+                tilesStored.push_back(newtile);
+            }
+        }
+    }
+
+
 }
 
 void Tilemap::UnloadAssets() {
@@ -120,7 +142,7 @@ void Tilemap::Load() {
         std::cout << std::endl;
     }
     
-    LoadTiles(); // Assign tile types, append tiles
+    LoadTiles(0, {8, 16}); // Assign tile types, append tiles
 }
 void Tilemap::Render() {
     Color color; // Substitute for textures

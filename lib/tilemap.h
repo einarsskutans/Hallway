@@ -18,7 +18,7 @@ class Tilemap {
         std::vector<std::vector<int>> readTilemap(const std::string& filename);
         std::vector<Asset*> readAssets(const std::string& filename);
         void LoadAssets(int n);
-        void LoadTiles();
+        void LoadTiles(bool loadFromMap, Point mapSize);
         void UnloadAssets();
         void Load();
         void Render();
@@ -40,6 +40,3 @@ class Tilemap {
 };
 
 #endif
-
-// {1, 1, 1, 0, 1, 1}
-// {0, 0, 0, 1, 1, 0}

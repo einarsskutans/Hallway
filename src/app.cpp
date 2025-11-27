@@ -6,7 +6,7 @@ Point operator/(const Point&a, const int&b) {
 
 void App::Init(Point newScreensize, int fps, bool debug) {
     screensize = newScreensize;
-    InitWindow(screensize.x, screensize.y, "test");
+    InitWindow(screensize.x, screensize.y, "Hallway");
     SetTargetFPS(fps);
 }
 void App::Run(bool debug) { // Main loop
@@ -82,7 +82,7 @@ void App::Run(bool debug) { // Main loop
 
         // Draw
         BeginDrawing();
-        ClearBackground(GRAY);
+        ClearBackground(BLUE);
 
         BeginMode2D(camera);
         
@@ -97,7 +97,6 @@ void App::Run(bool debug) { // Main loop
             DrawText(TextFormat("LEFT: %i", player1->vel.left), 1+1, 22, 1, BLACK);
             DrawText(TextFormat("RIGHT: %i", player1->vel.right), 1+1, 32, 1, BLACK);
         }
-        DrawText(TextFormat("I fuck my cows"), 0, 100, 16, BLACK);
 
         EndDrawing();
     }
