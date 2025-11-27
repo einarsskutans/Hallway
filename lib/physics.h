@@ -11,7 +11,7 @@
 
 class Physics {
     public:
-        static void CollideTile(Tilemap* tilemap, Structmap* structmap, Player* entity, Tile* tile); // Collision with a single tiles
+        static void CollideTile(Tilemap* tilemap, Structmap* structmap, Player* entity, Tile* tile, Structure* structure); // Collision with a single tiles
 };
 
 #endif

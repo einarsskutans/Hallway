@@ -66,7 +66,7 @@ std::vector<Asset*> Tilemap::readAssets(const std::string& filename) {
     return data;
 }
 
-void Tilemap::GenerateTileMap(const std::string& filename, Point mapSize) {
+void Tilemap::GenerateTileMap(const std::string& filename) {
     std::ofstream file(filename);
     
     if (!file.is_open()) {
@@ -123,7 +123,7 @@ void Tilemap::UnloadAssets() {
 void Tilemap::Load() {
     tilesStored = {};
 
-    GenerateTileMap("src/map1.csv", {64, 64});
+    GenerateTileMap("src/map1.csv");
     auto data = readTilemap("src/map1.csv");
     
     for (const auto& row : data) {

@@ -17,7 +17,7 @@ class Structmap {
         Structmap();
         std::vector<std::vector<int>> readStructmap(const std::string& filename);
         std::vector<Asset*> readAssets(const std::string& filename);
-        void GenerateStructmap(const std::string& filename, Point mapSize);
+        void GenerateStructmap(const std::string& filename);
         void LoadAssets(int n);
         void LoadStructures();
         void UnloadAssets();
@@ -25,6 +25,7 @@ class Structmap {
         void Render();
         void Move(Point newpos);
         Pos pos;
+        Point mapSize = {64, 64};
         std::vector<Structure*> structuresStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;

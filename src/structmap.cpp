@@ -66,7 +66,7 @@ std::vector<Asset*> Structmap::readAssets(const std::string& filename) {
     return data;
 }
 
-void Structmap::GenerateStructmap(const std::string& filename, Point mapSize) {
+void Structmap::GenerateStructmap(const std::string& filename) {
     std::ofstream file(filename);
     
     if (!file.is_open()) {
@@ -135,7 +135,7 @@ void Structmap::UnloadAssets() {
 void Structmap::Load() {
     structuresStored = {};
 
-    GenerateStructmap("src/map2.csv", {64, 64});
+    GenerateStructmap("src/map2.csv");
     auto data = readStructmap("src/map2.csv");
     
     for (const auto& row : data) {

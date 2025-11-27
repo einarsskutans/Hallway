@@ -82,7 +82,12 @@ void App::Run(bool debug) { // Main loop
 
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
-                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
+                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i], structmap->structuresStored[i]);
+            }
+        }
+        for (int i = 0; i < structmap->structuresStored.size(); i++) { // REDUNDANT PLEASE FIX
+            if (structmap->structuresStored[i]->solid) {
+                Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i], structmap->structuresStored[i]);
             }
         }
 

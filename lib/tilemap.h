@@ -17,7 +17,7 @@ class Tilemap {
         Tilemap();
         std::vector<std::vector<int>> readTilemap(const std::string& filename);
         std::vector<Asset*> readAssets(const std::string& filename);
-        void GenerateTileMap(const std::string& filename, Point mapSize);
+        void GenerateTileMap(const std::string& filename);
         void LoadAssets(int n);
         void LoadTiles();
         void UnloadAssets();
@@ -25,6 +25,7 @@ class Tilemap {
         void Render();
         void Move(Point newpos);
         Pos pos;
+        Point mapSize = {64, 64};
         std::vector<Tile*> tilesStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
