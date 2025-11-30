@@ -1,9 +1,9 @@
 #include <raylib.h>
 #include "lib/app.h"
 
-int main () {
+int main() {
     App* app = new App();
     app->Init(SCREENSIZE, 60, false);
-    app->Run(false); 
+    app->Run(false);
     return 0;
 }

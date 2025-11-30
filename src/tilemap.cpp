@@ -75,7 +75,15 @@ void Tilemap::GenerateTileMap(const std::string& filename) {
 
     for (int row = 0; row < mapSize.y; row++) {
         for (int col = 0; col < mapSize.x; col++) {
-            file << GetRandomValue(1, 3) << ",";
+            if (col <= 32 || col >= mapSize.x-32) {
+                file << "6,";
+            }
+            else if (row <= 32 || row >= mapSize.y-32) {
+                file << "6,";
+            }
+            else {
+                file << GetRandomValue(1, 3) << ",";
+            }
         }
         file << "\n";
     }

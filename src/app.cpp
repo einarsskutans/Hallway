@@ -20,12 +20,12 @@ void App::Run(bool debug) { // Main loop
 
     Tilemap* tilemap = new Tilemap();
     tilemap->pos.absolute = SCREENSIZE/2; // Player spawn
-    tilemap->LoadAssets(5);
+    tilemap->LoadAssets(8);
     tilemap->Load();
     
     Structmap* structmap = new Structmap();
     structmap->pos.absolute = SCREENSIZE/2;
-    structmap->LoadAssets(5);
+    structmap->LoadAssets(8);
     structmap->Load();
 
     srand(time(0));
