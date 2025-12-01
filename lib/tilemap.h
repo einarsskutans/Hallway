@@ -26,6 +26,7 @@ class Tilemap {
         void Move(Point newpos);
         Pos pos;
         Point mapSize = {128, 128};
+        Point tilemapSize {mapSize.x*tilesize, mapSize.y*tilesize};
         std::vector<Tile*> tilesStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;

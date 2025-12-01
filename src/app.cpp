@@ -3,6 +3,9 @@
 Point operator/(const Point&a, const int&b) {
     return Point{a.x/b, a.y/b};
 }
+Point operator-(const Point&a) {
+    return Point{-a.x, -a.y};
+}
 
 void App::Init(Point newScreensize, int fps, bool debug) {
     screensize = newScreensize;
@@ -12,19 +15,19 @@ void App::Init(Point newScreensize, int fps, bool debug) {
 void App::Run(bool debug) { // Main loop
     int vel = 1; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
-    Player* player1 = new Player(SCREENSIZE/8, {8, 8}, defaultvel);
+    Player* player1 = new Player({0, 0}, {8, 8}, defaultvel);
     player1->LoadAsset();
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
     camera.zoom = 4.0f;
 
     Tilemap* tilemap = new Tilemap();
-    tilemap->pos.absolute = {0, 0}; // Player spawn (center)
+    tilemap->pos.absolute = {-(tilemap->tilemapSize.x/2), -(tilemap->tilemapSize.y/2)}; // Player spawn (center)
     tilemap->LoadAssets(8);
     tilemap->Load();
     
     Structmap* structmap = new Structmap();
-    structmap->pos.absolute = {0, 0};
+    structmap->pos.absolute = {-(structmap->structmapSize.x/2), -(structmap->structmapSize.y/2)};
     structmap->LoadAssets(8);
     structmap->Load();
 
@@ -108,12 +111,7 @@ void App::Run(bool debug) { // Main loop
         player1->Draw();
 
         if (debug) {
-            DrawRectangle(1, 1, 60, 42, GRAY);
-            DrawRectangle(1+1, 1+1, 60-2, 42-2, WHITE);
-            DrawText(TextFormat("TILEX: %i", tilemap->tilesStored[0]->pos.absolute.x), 1+1, 32, 1, BLACK);
-            DrawText(TextFormat("TILEY: %i", tilemap->tilesStored[0]->pos.absolute.y), 1+1, 64, 1, BLACK);
-            DrawText(TextFormat("TILEMAPX: %i", tilemap->pos.absolute.x), 1+1, 96, 1, BLACK);
-            DrawText(TextFormat("TILEMAPY: %i", tilemap->pos.absolute.y), 1+1, 118, 1, BLACK);
+            DrawText(TextFormat("TILEX: %i", tilemap->tilesStored[0]->pos.absolute.x), -100, 32, 1, BLACK);
         }
 
         EndDrawing();

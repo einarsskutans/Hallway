@@ -7,8 +7,8 @@
 
 class Point {
     public:
-        int x = 0;
-        int y = 0;
+        signed int x = 0;
+        signed int y = 0;
 };
 
 class Pos {

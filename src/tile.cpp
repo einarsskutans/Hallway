@@ -5,5 +5,5 @@ Tile::Tile(Color newcolor) {
 }
 
 void Tile::Draw() {
-    DrawTexture(texture, GetPos().absolute.x-size.x/2, GetPos().absolute.y-size.y/2, WHITE);
+    DrawTexture(texture, pos.absolute.x-size.x/2, pos.absolute.y-size.y/2, WHITE);
 }

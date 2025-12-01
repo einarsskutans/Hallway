@@ -3,7 +3,6 @@
 
 #include <raylib.h>
 #include "sprite.h"
-#include "tilemap.h"
 
 class Tile : public Sprite {
     public:

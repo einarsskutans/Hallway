@@ -6,6 +6,7 @@ Tilemap::Tilemap() {
     pos.absolute.y = 0;
     pos.relative.x = 0;
     pos.relative.y = 0;
+    tilemapSize = {mapSize.x*tilesize, mapSize.y*tilesize};
 }
 
 std::vector<std::vector<int>> Tilemap::readTilemap(const std::string& filename) {
@@ -116,8 +117,8 @@ void Tilemap::LoadTiles() {
                 }
             }
 
-            newtile->pos.absolute.x = i*tilesize;
-            newtile->pos.absolute.y = j*tilesize;
+            newtile->pos.absolute.x = i*tilesize + pos.absolute.x;
+            newtile->pos.absolute.y = j*tilesize + pos.absolute.y;
             tilesStored.push_back(newtile);
         }
     }
@@ -149,7 +150,7 @@ void Tilemap::Render() {
     for (Tile* tile : tilesStored) {
         tile->Draw();
     }
-    DrawCircle(pos.absolute.x - mapSize.x*8/2, pos.absolute.y - mapSize.y*8/2, 32, RED);
+    DrawRectangleLines(pos.absolute.x-tilesize/2, pos.absolute.y-tilesize/2, tilemapSize.x, tilemapSize.y, RED);
 }
 
 void Tilemap::Move(Point newpos) {
