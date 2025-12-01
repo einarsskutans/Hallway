@@ -3,7 +3,7 @@ textures/grass_default2.png,grass_default2,2,0
 textures/grass_default3.png,grass_default3,3,0
 textures/struct_house0.png,struct_house0,4,1
 textures/struct_bush0.png,struct_bush0,5,0
-textures/stone_default1.png,stone_default1,6,1
-textures/stone_default2.png,stone_default2,7,1
-textures/stone_default3.png,stone_default3,8,1
-textures/stone_default4.png,stone_default4,9,1
+textures/stone_default1.png,stone_default1,6,0
+textures/stone_default2.png,stone_default2,7,0
+textures/stone_default3.png,stone_default3,8,0
+textures/stone_default4.png,stone_default4,9,0

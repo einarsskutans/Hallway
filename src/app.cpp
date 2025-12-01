@@ -19,12 +19,12 @@ void App::Run(bool debug) { // Main loop
     camera.zoom = 4.0f;
 
     Tilemap* tilemap = new Tilemap();
-    tilemap->pos.absolute = SCREENSIZE/2; // Player spawn
+    tilemap->pos.absolute = {0, 0}; // Player spawn (center)
     tilemap->LoadAssets(8);
     tilemap->Load();
     
     Structmap* structmap = new Structmap();
-    structmap->pos.absolute = SCREENSIZE/2;
+    structmap->pos.absolute = {0, 0};
     structmap->LoadAssets(8);
     structmap->Load();
 
@@ -110,10 +110,10 @@ void App::Run(bool debug) { // Main loop
         if (debug) {
             DrawRectangle(1, 1, 60, 42, GRAY);
             DrawRectangle(1+1, 1+1, 60-2, 42-2, WHITE);
-            DrawText(TextFormat("TOP: %i", player1->vel.top), 1+1, 2, 1, BLACK);
-            DrawText(TextFormat("BOTTOM: %i", player1->vel.bottom), 1+1, 12, 1, BLACK);
-            DrawText(TextFormat("LEFT: %i", player1->vel.left), 1+1, 22, 1, BLACK);
-            DrawText(TextFormat("RIGHT: %i", player1->vel.right), 1+1, 32, 1, BLACK);
+            DrawText(TextFormat("TILEX: %i", tilemap->tilesStored[0]->pos.absolute.x), 1+1, 32, 1, BLACK);
+            DrawText(TextFormat("TILEY: %i", tilemap->tilesStored[0]->pos.absolute.y), 1+1, 64, 1, BLACK);
+            DrawText(TextFormat("TILEMAPX: %i", tilemap->pos.absolute.x), 1+1, 96, 1, BLACK);
+            DrawText(TextFormat("TILEMAPY: %i", tilemap->pos.absolute.y), 1+1, 118, 1, BLACK);
         }
 
         EndDrawing();

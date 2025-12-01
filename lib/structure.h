@@ -7,7 +7,7 @@
 class Structure : public Sprite {
     public:
         Structure();
-        void Draw();
+        void Draw(Pos structmapPos);
         bool solid = false;
         Color color;
         Texture2D texture;

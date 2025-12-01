@@ -87,7 +87,6 @@ void Tilemap::GenerateTileMap(const std::string& filename) {
         }
         file << "\n";
     }
-
     file.close();
 }
 
@@ -117,8 +116,8 @@ void Tilemap::LoadTiles() {
                 }
             }
 
-            newtile->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
-            newtile->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
+            newtile->pos.absolute.x = i*tilesize;
+            newtile->pos.absolute.y = j*tilesize;
             tilesStored.push_back(newtile);
         }
     }
@@ -138,24 +137,26 @@ void Tilemap::Load() {
         std::vector<int> newrow;
         for (const auto& cell : row) {
             newrow.push_back(cell);
-            std::cout << cell;
+            //std::cout << cell;
         }
         textureMap.push_back(newrow);
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
     
     LoadTiles(); // Assign tile types, append tiles
 }
 void Tilemap::Render() {
-    Color color; // Substitute for textures
     for (Tile* tile : tilesStored) {
         tile->Draw();
     }
+    DrawCircle(pos.absolute.x - mapSize.x*8/2, pos.absolute.y - mapSize.y*8/2, 32, RED);
 }
 
 void Tilemap::Move(Point newpos) {
     for (Tile* tile : tilesStored) {
-        tile->pos.absolute.x += newpos.x;
+        tile->pos.absolute.x += newpos.x; // Move tilemap contents
         tile->pos.absolute.y += newpos.y;
     }
+    pos.absolute.x += newpos.x; // Move tilemap
+    pos.absolute.y += newpos.y;
 }

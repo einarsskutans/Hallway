@@ -121,13 +121,13 @@ void Structmap::LoadStructures() {
                     }
                 }
 
-                newstruct->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
-                newstruct->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
+                newstruct->pos.absolute.x = i*tilesize;
+                newstruct->pos.absolute.y = j*tilesize;
                 structuresStored.push_back(newstruct);
             }
             else if (textureMap[j][i] == 0) {
-                newstruct->pos.absolute.x += i*tilesize - textureMap[j].size()/4*tilesize;
-                newstruct->pos.absolute.y += j*tilesize - textureMap.size()/4*tilesize;
+                newstruct->pos.absolute.x = i*tilesize;
+                newstruct->pos.absolute.y = j*tilesize;
             }
         }
     }
@@ -156,9 +156,8 @@ void Structmap::Load() {
     LoadStructures(); // Assign tile types, append tiles
 }
 void Structmap::Render() {
-    Color color; // Substitute for textures
     for (Structure* structure : structuresStored) {
-        structure->Draw();
+        structure->Draw(pos);
     }
 }
 

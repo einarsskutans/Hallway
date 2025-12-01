@@ -4,6 +4,6 @@ Structure::Structure() {
 
 }
 
-void Structure::Draw() {
-    DrawTexture(texture, GetPos().absolute.x-size.x/2, GetPos().absolute.y-size.y/2, WHITE);
+void Structure::Draw(Pos structmapPos) {
+    DrawTexture(texture, structmapPos.absolute.x + GetPos().absolute.x-size.x/2, structmapPos.absolute.y + GetPos().absolute.y-size.y/2, WHITE);
 }

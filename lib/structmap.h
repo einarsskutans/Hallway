@@ -25,7 +25,7 @@ class Structmap {
         void Render();
         void Move(Point newpos);
         Pos pos;
-        Point mapSize = {128, 128};
+        Point mapSize = {32, 32};
         std::vector<Structure*> structuresStored;
         std::vector<std::vector<int>> textureMap;
         std::vector<std::vector<int>> data;
@@ -36,7 +36,7 @@ class Structmap {
 
         enum structureSpawnRate { // 0 - 100 as in %
             CHANCE_HOUSE = 4,
-            CHANCE_BUSH = 40,
+            CHANCE_BUSH = 100,
         };
 };
 
