@@ -6,6 +6,7 @@ Structmap::Structmap() {
     pos.absolute.y = 0;
     pos.relative.x = 0;
     pos.relative.y = 0;
+    structmapSize = {mapSize.x*tilesize, mapSize.y*tilesize};
 }
 
 std::vector<std::vector<int>> Structmap::readStructmap(const std::string& filename) {
@@ -121,13 +122,13 @@ void Structmap::LoadStructures() {
                     }
                 }
 
-                newstruct->pos.absolute.x = i*tilesize;
-                newstruct->pos.absolute.y = j*tilesize;
+                newstruct->pos.absolute.x = i*tilesize + pos.absolute.x;
+                newstruct->pos.absolute.y = j*tilesize + pos.absolute.y;
                 structuresStored.push_back(newstruct);
             }
             else if (textureMap[j][i] == 0) {
-                newstruct->pos.absolute.x = i*tilesize;
-                newstruct->pos.absolute.y = j*tilesize;
+                newstruct->pos.absolute.x = i*tilesize  + pos.absolute.x;
+                newstruct->pos.absolute.y = j*tilesize  + pos.absolute.y;
             }
         }
     }
@@ -147,23 +148,26 @@ void Structmap::Load() {
         std::vector<int> newrow;
         for (const auto& cell : row) {
             newrow.push_back(cell);
-            std::cout << cell;
+            //std::cout << cell;
         }
         textureMap.push_back(newrow);
-        std::cout << std::endl;
+        //std::cout << std::endl;
     }
     
-    LoadStructures(); // Assign tile types, append tiles
+    LoadStructures(); // Assign structure types, append structures
 }
 void Structmap::Render() {
     for (Structure* structure : structuresStored) {
-        structure->Draw(pos);
+        structure->Draw();
     }
+    //DrawRectangleLines(pos.absolute.x-8, pos.absolute.y-8, structmapSize.x, structmapSize.y, RED);
 }
 
 void Structmap::Move(Point newpos) {
     for (Structure* structure : structuresStored) {
-        structure->pos.absolute.x += newpos.x;
+        structure->pos.absolute.x += newpos.x; // Move structuremap contents
         structure->pos.absolute.y += newpos.y;
     }
+    pos.absolute.x += newpos.x; // Move structuremap
+    pos.absolute.y += newpos.y;
 }

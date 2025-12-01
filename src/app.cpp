@@ -27,7 +27,7 @@ void App::Run(bool debug) { // Main loop
     tilemap->Load();
     
     Structmap* structmap = new Structmap();
-    structmap->pos.absolute = {-(structmap->structmapSize.x/2), -(structmap->structmapSize.y/2)};
+    structmap->pos.absolute = {-(structmap->structmapSize.x/2)+8, -(structmap->structmapSize.y/2)+8};
     structmap->LoadAssets(8);
     structmap->Load();
 

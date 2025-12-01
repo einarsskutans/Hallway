@@ -150,7 +150,7 @@ void Tilemap::Render() {
     for (Tile* tile : tilesStored) {
         tile->Draw();
     }
-    DrawRectangleLines(pos.absolute.x-tilesize/2, pos.absolute.y-tilesize/2, tilemapSize.x, tilemapSize.y, RED);
+    //DrawRectangleLines(pos.absolute.x-tilesize/2, pos.absolute.y-tilesize/2, tilemapSize.x, tilemapSize.y, RED);
 }
 
 void Tilemap::Move(Point newpos) {
