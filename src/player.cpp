@@ -7,18 +7,18 @@ Player::Player(Point newpos, Point newsize, Velocity newvel) {
 }
 
 void Player::LoadAsset() {
-        Image image1 = LoadImage("textures/player1.png"); // Load image in CPU memory (RAM)
-        Image image2 = LoadImage("textures/player1_left.png"); // Load image in CPU memory (RAM)
-        Image image3 = LoadImage("textures/player1_down.png"); // Load image in CPU memory (RAM)
-        Image image4 = LoadImage("textures/player1_right.png"); // Load image in CPU memory (RAM)
-        textureDefault = LoadTextureFromImage(image1); // Image converted to texture, uploaded to GPU memory (VRAM)
-        textureLeft = LoadTextureFromImage(image2);
-        textureDown = LoadTextureFromImage(image3);
-        textureRight = LoadTextureFromImage(image4);
-        UnloadImage(image1);
-        UnloadImage(image2);
-        UnloadImage(image3);
-        UnloadImage(image4);
+    Image image1 = LoadImage("textures/player1.png"); // Load image in CPU memory (RAM)
+    Image image2 = LoadImage("textures/player1_left.png"); // Load image in CPU memory (RAM)
+    Image image3 = LoadImage("textures/player1_down.png"); // Load image in CPU memory (RAM)
+    Image image4 = LoadImage("textures/player1_right.png"); // Load image in CPU memory (RAM)
+    textureDefault = LoadTextureFromImage(image1); // Image converted to texture, uploaded to GPU memory (VRAM)
+    textureLeft = LoadTextureFromImage(image2);
+    textureDown = LoadTextureFromImage(image3);
+    textureRight = LoadTextureFromImage(image4);
+    UnloadImage(image1);
+    UnloadImage(image2);
+    UnloadImage(image3);
+    UnloadImage(image4);
 }
 
 void Player::Draw() {

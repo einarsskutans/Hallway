@@ -15,7 +15,7 @@ void App::Init(Point newScreensize, int fps, bool debug) {
 void App::Run(bool debug) { // Main loop
     int vel = 1; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
-    Player* player1 = new Player({0, 0}, {8, 8}, defaultvel);
+    Player* player1 = new Player({0, 0}, {4, 8}, defaultvel);
     player1->LoadAsset();
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
@@ -31,11 +31,16 @@ void App::Run(bool debug) { // Main loop
     structmap->LoadAssets(8);
     structmap->Load();
 
+    Enemy* enemy1 = new Enemy({16, 16}, {32, 32}, defaultvel);
+    enemy1->LoadAsset();
+
+    int decider;
     srand(time(0));
 
     while (WindowShouldClose() == false){
         // Events; Player moves by moving the Tilemap itself
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
+        decider = GetRandomValue(1, 60);
 
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
@@ -88,6 +93,29 @@ void App::Run(bool debug) { // Main loop
         player1->Move(tilemap, structmap, {0, -player1->GetVel().top});
         player1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
 
+        // Enemy movement
+        enemy1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
+        enemy1->Move(tilemap, structmap, {-player1->GetVel().right, 0});
+        enemy1->Move(tilemap, structmap, {0, -player1->GetVel().top});
+        enemy1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
+
+        if (decider < 31) {
+            if (player1->GetPos().absolute.x < enemy1->GetPos().absolute.x) {
+                enemy1->Move(tilemap, structmap, {-vel, 0});
+            }
+            else if (player1->GetPos().absolute.x > enemy1->GetPos().absolute.x) {
+                enemy1->Move(tilemap, structmap, {vel, 0});
+            }
+            if (player1->GetPos().absolute.y < enemy1->GetPos().absolute.y) {
+                enemy1->Move(tilemap, structmap, {0, -vel});
+            }
+            else if (player1->GetPos().absolute.y > enemy1->GetPos().absolute.y) {
+                enemy1->Move(tilemap, structmap, {0, vel});
+            }
+        }
+
+
+        // Physics
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
                 Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
@@ -109,9 +137,11 @@ void App::Run(bool debug) { // Main loop
         structmap->Render();
         
         player1->Draw();
+        enemy1->Draw();
 
         if (debug) {
-            DrawText(TextFormat("TILEX: %i", tilemap->tilesStored[0]->pos.absolute.x), -100, 32, 1, BLACK);
+            DrawText(TextFormat("ENEMYX: %i", enemy1->pos.absolute.x), -100, 32, 1, BLACK);
+            DrawText(TextFormat("ENEMYY: %i", enemy1->pos.absolute.y), -100, 48, 1, BLACK);
         }
 
         EndDrawing();
