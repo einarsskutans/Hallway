@@ -17,7 +17,7 @@
 #include "structmap.h"
 #include "enemy.h"
 
-const Point SCREENSIZE = {1280, 720};
+const Point SCREENSIZE = {1440, 720};
 
 class App {
     public:

@@ -14,8 +14,23 @@ void App::Init(Point newScreensize, int fps, bool debug) {
 }
 
 void App::Menu() {
+
+    Image image1 = LoadImage("textures/menu.png");
+    Texture2D textureMenu = LoadTextureFromImage(image1);
+    UnloadImage(image1);
+
     while (WindowShouldClose() == false) {
-    
+        if (IsKeyDown(KEY_SPACE)) {
+            break;
+        }
+
+        BeginDrawing();
+        ClearBackground(BLUE);
+
+        DrawTexture(textureMenu, 0, 0, WHITE);
+        DrawText(TextFormat("Press space to play"), SCREENSIZE.x/8, SCREENSIZE.y/2-SCREENSIZE.x/12, SCREENSIZE.x/24, WHITE);
+
+        EndDrawing();
     }
 }
 
