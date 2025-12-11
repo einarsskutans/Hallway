@@ -12,10 +12,18 @@ void App::Init(Point newScreensize, int fps, bool debug) {
     InitWindow(screensize.x, screensize.y, "Hallway");
     SetTargetFPS(fps);
 }
+
+void App::Menu() {
+    while (WindowShouldClose() == false) {
+    
+    }
+}
+
 void App::Run(bool debug) { // Main loop
     int vel = 1; // SPEED
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player({0, 0}, {4, 8}, defaultvel);
+    player1->health = {100, 100};
     player1->LoadAsset();
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
@@ -37,7 +45,7 @@ void App::Run(bool debug) { // Main loop
     int decider;
     srand(time(0));
 
-    while (WindowShouldClose() == false){
+    while (WindowShouldClose() == false) {
         // Events; Player moves by moving the Tilemap itself
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
         decider = GetRandomValue(1, 60);
@@ -114,7 +122,6 @@ void App::Run(bool debug) { // Main loop
             }
         }
 
-
         // Physics
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
@@ -125,6 +132,12 @@ void App::Run(bool debug) { // Main loop
             if (structmap->structuresStored[i]->solid) {
                 Physics::CollideStructure(tilemap, structmap, player1, structmap->structuresStored[i]);
             }
+        }
+        if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy1)) {
+            player1->health.x -= 10;
+        }
+        else {
+            player1->iframes--;
         }
 
         // Draw
@@ -142,6 +155,7 @@ void App::Run(bool debug) { // Main loop
         if (debug) {
             DrawText(TextFormat("ENEMYX: %i", enemy1->pos.absolute.x), -100, 32, 1, BLACK);
             DrawText(TextFormat("ENEMYY: %i", enemy1->pos.absolute.y), -100, 48, 1, BLACK);
+            DrawText(TextFormat("HEALTH: %i", player1->health.x), -100, 64, 1, BLACK);
         }
 
         EndDrawing();

@@ -37,6 +37,8 @@ class Sprite {
         Velocity blocked;
         Pos pos;
         Point size;
+        Point health;
+        int iframes = 0;
 
         bool drawable;
         bool movable;

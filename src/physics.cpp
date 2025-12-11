@@ -43,3 +43,17 @@ void Physics::CollideStructure(Tilemap* tilemap, Structmap* structmap, Player* e
         }
     }
 }
+
+bool Physics::CollideEnemy(Player* entity, Enemy* enemy) {
+    if (
+        entity->pos.absolute.x + entity->size.x/2 > enemy->pos.absolute.x - enemy->size.x/2 &&
+        entity->pos.absolute.x - entity->size.x/2 < enemy->pos.absolute.x + enemy->size.x/2 &&
+        entity->pos.absolute.y + entity->size.y/2 > enemy->pos.absolute.y - enemy->size.y/2 &&
+        entity->pos.absolute.y - entity->size.y/2 < enemy->pos.absolute.y + enemy->size.y/2
+    ) {
+        entity->iframes = 120;
+        return true;
+    } else {
+        return false;
+    }
+}
