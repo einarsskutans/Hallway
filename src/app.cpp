@@ -55,10 +55,16 @@ void App::Run(bool debug) { // Main loop
     structmap->Load();
 
     Enemy* enemy1 = new Enemy({16, 16}, {32, 32}, defaultvel);
+    enemy1->health = {100, 100};
     enemy1->LoadAsset();
+
+    Tile* damageBox = new Tile(BLACK);
+    int damageBoxTime = 0;
 
     int decider;
     srand(time(0));
+
+    Menu();
 
     while (WindowShouldClose() == false) {
         // Events; Player moves by moving the Tilemap itself
@@ -111,6 +117,27 @@ void App::Run(bool debug) { // Main loop
             }
         }
 
+        if (IsKeyDown(KEY_SPACE) && damageBoxTime <= 0) {
+            damageBoxTime = 120;
+            if (player1->orientation.top) {
+                damageBox->pos.absolute = {player1->pos.absolute.x, player1->pos.absolute.y - 8};
+                damageBox->size = {16, 8};
+            }
+            else if (player1->orientation.bottom) {
+                damageBox->pos.absolute = {player1->pos.absolute.x, player1->pos.absolute.y + 8};
+                damageBox->size = {16, 8};
+            }
+            else if (player1->orientation.left) {
+                damageBox->pos.absolute = {player1->pos.absolute.x - 8, player1->pos.absolute.y};
+                damageBox->size = {8, 16};
+            }
+            else if (player1->orientation.right) {
+                damageBox->pos.absolute = {player1->pos.absolute.x + 8, player1->pos.absolute.y};
+                damageBox->size = {8, 16};
+            }
+
+        }
+
         player1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
         player1->Move(tilemap, structmap, {-player1->GetVel().right, 0});
         player1->Move(tilemap, structmap, {0, -player1->GetVel().top});
@@ -122,6 +149,13 @@ void App::Run(bool debug) { // Main loop
         enemy1->Move(tilemap, structmap, {0, -player1->GetVel().top});
         enemy1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
 
+        if (decider < 5) {
+            Enemy* newenemy = new Enemy({16, 16}, {32, 32}, defaultvel);
+            newenemy->health = {100, 100};
+            newenemy->pos.absolute = {32, 32};
+            newenemy->LoadAsset();
+            structmap->enemiesStored.push_back(newenemy);
+        }
         if (decider < 31) {
             if (player1->GetPos().absolute.x < enemy1->GetPos().absolute.x) {
                 enemy1->Move(tilemap, structmap, {-vel, 0});
@@ -150,9 +184,22 @@ void App::Run(bool debug) { // Main loop
         }
         if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy1)) {
             player1->health.x -= 10;
+            if (player1->health.x <= 0) {
+                Menu();
+            }
+        }
+        if (damageBoxTime) {
+            if (Physics::CollideEnemyDamage(enemy1, damageBox)) {
+                damageBoxTime = 0;
+                enemy1->health.x -= 10;
+            }
         }
         else {
             player1->iframes--;
+        }
+        damageBoxTime--;
+        if (damageBoxTime <= 0) {
+            damageBox->pos.absolute = {-128, -128};
         }
 
         // Draw
@@ -167,9 +214,15 @@ void App::Run(bool debug) { // Main loop
         player1->Draw();
         enemy1->Draw();
 
+        damageBox->Draw();
+        DrawRectangleLines(damageBox->pos.absolute.x - damageBox->size.x/2, damageBox->pos.absolute.y - damageBox->size.y/2, damageBox->size.x, damageBox->size.y, WHITE);
+
+        DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.y/4, 4, GRAY);
+        DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.x/4, 4, RED);
+
         if (debug) {
             DrawText(TextFormat("ENEMYX: %i", enemy1->pos.absolute.x), -100, 32, 1, BLACK);
-            DrawText(TextFormat("ENEMYY: %i", enemy1->pos.absolute.y), -100, 48, 1, BLACK);
+            DrawText(TextFormat("ENEMYHP: %i", enemy1->health.x), -100, 48, 1, BLACK);
             DrawText(TextFormat("HEALTH: %i", player1->health.x), -100, 64, 1, BLACK);
         }
 

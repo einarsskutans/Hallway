@@ -26,7 +26,7 @@ class App {
         void Run(bool debug);
     private:
         Point screensize;
-        bool menu = true;
+        bool mainloop = false;
 };
 
 #endif

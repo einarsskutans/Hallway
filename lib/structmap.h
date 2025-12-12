@@ -32,6 +32,7 @@ class Structmap {
         std::vector<std::vector<int>> data;
 
         std::vector<Asset*> assetsStored;
+        std::vector<Enemy*> enemiesStored;
 
         int tilesize = 8;
 

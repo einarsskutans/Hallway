@@ -57,3 +57,16 @@ bool Physics::CollideEnemy(Player* entity, Enemy* enemy) {
         return false;
     }
 }
+
+bool Physics::CollideEnemyDamage(Enemy* enemy, Tile* tile) {
+    if (
+        enemy->pos.absolute.x + enemy->size.x/2 > tile->pos.absolute.x - tile->size.x/2 &&
+        enemy->pos.absolute.x - enemy->size.x/2 < tile->pos.absolute.x + tile->size.x/2 &&
+        enemy->pos.absolute.y + enemy->size.y/2 > tile->pos.absolute.y - tile->size.y/2 &&
+        enemy->pos.absolute.y - enemy->size.y/2 < tile->pos.absolute.y + tile->size.y/2
+    ) {
+        return true;
+    } else {
+        return false;
+    }
+}
