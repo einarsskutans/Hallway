@@ -16,7 +16,7 @@ void Enemy::Draw() {
     DrawTexture(textureDefault, GetPos().absolute.x-size.x/2, GetPos().absolute.y-size.y/2, WHITE);
 }
 
-void Enemy::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
+void Enemy::Move(Point newpos) {
     pos.relative = {-newpos.x, -newpos.y};
     pos.absolute.x += newpos.x;
     pos.absolute.y += newpos.y;

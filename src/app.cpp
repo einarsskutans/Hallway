@@ -54,10 +54,6 @@ void App::Run(bool debug) { // Main loop
     structmap->LoadAssets(8);
     structmap->Load();
 
-    Enemy* enemy1 = new Enemy({16, 16}, {32, 32}, defaultvel);
-    enemy1->health = {100, 100};
-    enemy1->LoadAsset();
-
     Tile* damageBox = new Tile(BLACK);
     int damageBoxTime = 0;
 
@@ -69,7 +65,7 @@ void App::Run(bool debug) { // Main loop
     while (WindowShouldClose() == false) {
         // Events; Player moves by moving the Tilemap itself
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
-        decider = GetRandomValue(1, 60);
+        decider = GetRandomValue(1, 1024);
 
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
@@ -144,32 +140,39 @@ void App::Run(bool debug) { // Main loop
         player1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
 
         // Enemy movement
-        enemy1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
-        enemy1->Move(tilemap, structmap, {-player1->GetVel().right, 0});
-        enemy1->Move(tilemap, structmap, {0, -player1->GetVel().top});
-        enemy1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
+        for (Enemy* enemy : structmap->enemiesStored) {
+            enemy->Move({-player1->GetVel().left, 0});
+            enemy->Move({-player1->GetVel().right, 0});
+            enemy->Move({0, -player1->GetVel().top});
+            enemy->Move({0, -player1->GetVel().bottom});
+            enemy->iframes--;
+        }
 
-        if (decider < 5) {
+        if (decider == 1) {
             Enemy* newenemy = new Enemy({16, 16}, {32, 32}, defaultvel);
             newenemy->health = {100, 100};
             newenemy->pos.absolute = {32, 32};
             newenemy->LoadAsset();
             structmap->enemiesStored.push_back(newenemy);
         }
-        if (decider < 31) {
-            if (player1->GetPos().absolute.x < enemy1->GetPos().absolute.x) {
-                enemy1->Move(tilemap, structmap, {-vel, 0});
-            }
-            else if (player1->GetPos().absolute.x > enemy1->GetPos().absolute.x) {
-                enemy1->Move(tilemap, structmap, {vel, 0});
-            }
-            if (player1->GetPos().absolute.y < enemy1->GetPos().absolute.y) {
-                enemy1->Move(tilemap, structmap, {0, -vel});
-            }
-            else if (player1->GetPos().absolute.y > enemy1->GetPos().absolute.y) {
-                enemy1->Move(tilemap, structmap, {0, vel});
+        if (decider <= 512) {
+            for (Enemy* enemy : structmap->enemiesStored) {
+                if (player1->GetPos().absolute.x < enemy->GetPos().absolute.x) {             
+                    enemy->Move({-vel, 0});           
+                }
+                else if (player1->GetPos().absolute.x > enemy->GetPos().absolute.x) {
+                    enemy->Move({vel, 0});              
+                }
+                if (player1->GetPos().absolute.y < enemy->GetPos().absolute.y) {            
+                    enemy->Move({0, -vel});                    
+                }
+                else if (player1->GetPos().absolute.y > enemy->GetPos().absolute.y) {
+                    enemy->Move({0, vel});                   
+                }
             }
         }
+
+        player1->iframes--;
 
         // Physics
         for (int i = 0; i < tilemap->tilesStored.size(); i++) {
@@ -182,22 +185,28 @@ void App::Run(bool debug) { // Main loop
                 Physics::CollideStructure(tilemap, structmap, player1, structmap->structuresStored[i]);
             }
         }
-        if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy1)) {
-            player1->health.x -= 10;
-            if (player1->health.x <= 0) {
-                Menu();
+        for (Enemy* enemy : structmap->enemiesStored) {
+            if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy)) {
+                player1->iframes = 120;
+                player1->health.x -= 10;
+                if (player1->health.x <= 0) {
+                    Menu();
+                }
             }
         }
-        if (damageBoxTime) {
-            if (Physics::CollideEnemyDamage(enemy1, damageBox)) {
-                damageBoxTime = 0;
-                enemy1->health.x -= 10;
-            }
+        if (damageBoxTime > 0) {
+            for (Enemy* enemy : structmap->enemiesStored) {
+                if (Physics::CollideEnemyDamage(enemy, damageBox)) {
+                    enemy->iframes = 120;
+                    damageBoxTime = 0;
+                    enemy->health.x -= 10;
+                } else {
+                    enemy->iframes--;
+                }
+            }     
+            damageBoxTime--;
+            
         }
-        else {
-            player1->iframes--;
-        }
-        damageBoxTime--;
         if (damageBoxTime <= 0) {
             damageBox->pos.absolute = {-128, -128};
         }
@@ -212,13 +221,16 @@ void App::Run(bool debug) { // Main loop
         structmap->Render();
         
         player1->Draw();
-        enemy1->Draw();
 
         damageBox->Draw();
         DrawRectangleLines(damageBox->pos.absolute.x - damageBox->size.x/2, damageBox->pos.absolute.y - damageBox->size.y/2, damageBox->size.x, damageBox->size.y, WHITE);
 
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.y/4, 4, GRAY);
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.x/4, 4, RED);
+
+        for (Enemy* enemy : structmap->enemiesStored) {
+            enemy->Draw();
+        }
 
         if (debug) {
             DrawText(TextFormat("ENEMYX: %i", enemy1->pos.absolute.x), -100, 32, 1, BLACK);

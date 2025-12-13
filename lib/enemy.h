@@ -7,7 +7,6 @@
 #include "velocity.h"
 #include "tilemap.h"
 #include "tile.h"
-#include "structmap.h"
 #include "structure.h"
 
 class Enemy : public Sprite {
@@ -15,7 +14,7 @@ class Enemy : public Sprite {
         Enemy(Point newpos, Point newsize, Velocity newvel);
         void LoadAsset();
         void Draw();
-        void Move(Tilemap* tilemap, Structmap* structmap, Point newpos);
+        void Move(Point newpos);
         Velocity orientation; // Velocity class just to figure out sides
     private:
         std::string name;

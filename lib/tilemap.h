@@ -6,7 +6,6 @@
 #include "tile.h"
 #include "tilemap.h"
 #include "asset.h"
-#include "enemy.h"
 
 #include "string"
 #include "iostream"

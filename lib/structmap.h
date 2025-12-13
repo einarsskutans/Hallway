@@ -3,8 +3,8 @@
 
 #include <raylib.h>
 #include "sprite.h"
+#include "enemy.h"
 #include "structure.h"
-#include "structmap.h"
 #include "asset.h"
 
 #include "string"
