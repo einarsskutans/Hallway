@@ -148,7 +148,7 @@ void App::Run(bool debug) { // Main loop
             enemy->iframes--;
         }
 
-        if (decider == 1) {
+        if (decider == 1 && structmap->enemiesStored.size() < 3) {
             Enemy* newenemy = new Enemy({16, 16}, {32, 32}, defaultvel);
             newenemy->health = {100, 100};
             newenemy->pos.absolute = {32, 32};
@@ -195,13 +195,16 @@ void App::Run(bool debug) { // Main loop
             }
         }
         if (damageBoxTime > 0) {
-            for (Enemy* enemy : structmap->enemiesStored) {
-                if (Physics::CollideEnemyDamage(enemy, damageBox)) {
-                    enemy->iframes = 120;
+            for (int i = 0; i < structmap->enemiesStored.size(); i++) {
+                if (Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
+                    structmap->enemiesStored[i]->iframes = 120;
                     damageBoxTime = 0;
-                    enemy->health.x -= 10;
+                    structmap->enemiesStored[i]->health.x -= 10;
+                    if (structmap->enemiesStored[i]->health.x <= 0) {
+                        structmap->enemiesStored.erase(structmap->enemiesStored.begin() + i);
+                    }
                 } else {
-                    enemy->iframes--;
+                    structmap->enemiesStored[i]->iframes--;
                 }
             }     
             damageBoxTime--;
@@ -233,8 +236,6 @@ void App::Run(bool debug) { // Main loop
         }
 
         if (debug) {
-            DrawText(TextFormat("ENEMYX: %i", enemy1->pos.absolute.x), -100, 32, 1, BLACK);
-            DrawText(TextFormat("ENEMYHP: %i", enemy1->health.x), -100, 48, 1, BLACK);
             DrawText(TextFormat("HEALTH: %i", player1->health.x), -100, 64, 1, BLACK);
         }
 
