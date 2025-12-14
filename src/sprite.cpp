@@ -19,7 +19,14 @@ void Sprite::SetDrawable(bool newdrawable) {
 void Sprite::SetMovable(bool newmovable) {
     movable = newmovable;
 }
-
+void Sprite::LoadAnimationFrames(char* pathToFolder, int n) {
+    for (int i = 0; i < 12; i++) {
+        Image image = LoadImage(TextFormat("%s/frame000%i.png", pathToFolder, i));
+        Texture2D texture = LoadTextureFromImage(image);
+        textureFrames.push_back(texture);
+        UnloadImage(image);
+    }
+}
 Pos Sprite::GetPos() {
     return pos;
 }

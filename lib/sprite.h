@@ -3,6 +3,7 @@
 
 #include <utility>
 #include <raylib.h>
+#include <string>
 #include "velocity.h"
 
 class Point {
@@ -25,6 +26,7 @@ class Sprite {
         void SetVel(Velocity newvel);
         void SetDrawable(bool newdrawable);
         void SetMovable(bool newmovable);
+        void LoadAnimationFrames(char* pathToFolder, int n);
         Pos GetPos();
         Point GetSize();
         Velocity GetVel();
@@ -38,8 +40,11 @@ class Sprite {
         Pos pos;
         Point size;
         Point health;
-        int iframes = 0;
+        std::vector<Texture2D> textureFrames;
 
+        int sides = 1;
+        int framesPerSide = 1;
+        int iframes = 0;
         bool drawable;
         bool movable;
 };

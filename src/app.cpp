@@ -56,47 +56,11 @@ void App::Run(bool debug) { // Main loop
 
     // Damage box and animation (MOVE OUTSIDE THIS CLASS PLEASE)
     Tile* damageBox = new Tile(BLACK);
-    Image image1 = LoadImage("textures/swipe/frame0000.png");
-    Image image2 = LoadImage("textures/swipe/frame0001.png");
-    Image image3 = LoadImage("textures/swipe/frame0002.png");
-    Texture2D swipetexture1 = LoadTextureFromImage(image1);
-    Texture2D swipetexture2 = LoadTextureFromImage(image2);
-    Texture2D swipetexture3 = LoadTextureFromImage(image3);
-    UnloadImage(image1);
-    UnloadImage(image2);
-    UnloadImage(image3);
+    damageBox->sides = 4;
+    damageBox->framesPerSide = 3;
+    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
 
-    Image image4 = LoadImage("textures/swipe/right/frame0000.png");
-    Image image5 = LoadImage("textures/swipe/right/frame0001.png");
-    Image image6 = LoadImage("textures/swipe/right/frame0002.png");
-    Texture2D swipetexture1R = LoadTextureFromImage(image4);
-    Texture2D swipetexture2R = LoadTextureFromImage(image5);
-    Texture2D swipetexture3R = LoadTextureFromImage(image6);
-    UnloadImage(image4);
-    UnloadImage(image5);
-    UnloadImage(image6);
-
-    Image image7 = LoadImage("textures/swipe/left/frame0000.png");
-    Image image8 = LoadImage("textures/swipe/left/frame0001.png");
-    Image image9 = LoadImage("textures/swipe/left/frame0002.png");
-    Texture2D swipetexture1L = LoadTextureFromImage(image7);
-    Texture2D swipetexture2L = LoadTextureFromImage(image8);
-    Texture2D swipetexture3L = LoadTextureFromImage(image9);
-    UnloadImage(image7);
-    UnloadImage(image8);
-    UnloadImage(image9);
-
-    Image image10 = LoadImage("textures/swipe/down/frame0000.png");
-    Image image11 = LoadImage("textures/swipe/down/frame0001.png");
-    Image image12 = LoadImage("textures/swipe/down/frame0002.png");
-    Texture2D swipetexture1D = LoadTextureFromImage(image10);
-    Texture2D swipetexture2D = LoadTextureFromImage(image11);
-    Texture2D swipetexture3D = LoadTextureFromImage(image12);
-    UnloadImage(image10);
-    UnloadImage(image11);
-    UnloadImage(image12);
-
-    damageBox->texture = swipetexture1;
+    damageBox->texture = damageBox->textureFrames[0];
     int damageBoxTime = 0;
 
     int decider;
@@ -156,7 +120,7 @@ void App::Run(bool debug) { // Main loop
         }
 
         if (IsKeyDown(KEY_SPACE) && damageBoxTime <= 0) {
-            damageBoxTime = 16;
+            damageBoxTime = 15;
             if (player1->orientation.top) {
                 damageBox->pos.absolute = {player1->pos.absolute.x, player1->pos.absolute.y - 8};
                 damageBox->size = {16, 8};
@@ -238,11 +202,11 @@ void App::Run(bool debug) { // Main loop
             }
             enemy->iframes--;
         }
+
         if (damageBoxTime > 0) {
             for (int i = 0; i < structmap->enemiesStored.size(); i++) {
                 if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
                     structmap->enemiesStored[i]->iframes = 120;
-                    damageBoxTime = 0;
                     structmap->enemiesStored[i]->health.x -= 10;
                     if (structmap->enemiesStored[i]->health.x <= 0) {
                         structmap->enemiesStored.erase(structmap->enemiesStored.begin() + i);
@@ -250,58 +214,58 @@ void App::Run(bool debug) { // Main loop
                 }
             }
             
-            if (damageBoxTime <= 4) {
+            if (damageBoxTime <= 5) {
                 if (player1->orientation.top) {
-                    damageBox->texture = swipetexture3;
+                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*0];
                 }
                 else if (player1->orientation.right) {
-                    damageBox->texture = swipetexture3R;
+                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*3];
                 }
                 else if (player1->orientation.left) {
-                    damageBox->texture = swipetexture3L;
+                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*2];
                 }
                 else if (player1->orientation.bottom) {
-                    damageBox->texture = swipetexture3D;
+                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*1];
                 }
             }
             else if (damageBoxTime <= 10) {
                 if (player1->orientation.top) {
-                    damageBox->texture = swipetexture2;
+                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*0];
                 }
                 else if (player1->orientation.right) {
-                    damageBox->texture = swipetexture2R;
+                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*3];
                 }
                 else if (player1->orientation.left) {
-                    damageBox->texture = swipetexture2L;
+                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*2];
                 }
                 else if (player1->orientation.bottom) {
-                    damageBox->texture = swipetexture2D;
+                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*1];
                 }
             }
-            else if (damageBoxTime <= 16) {
+            else if (damageBoxTime <= 15) {
                 if (player1->orientation.top) {
-                    damageBox->texture = swipetexture1;
+                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*0];
                 }
                 else if (player1->orientation.right) {
-                    damageBox->texture = swipetexture1R;
+                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*3];
                 }
                 else if (player1->orientation.left) {
-                    damageBox->texture = swipetexture1L;
+                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*2];
                 }
                 else if (player1->orientation.bottom) {
-                    damageBox->texture = swipetexture1D;
+                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*1];
                 }
             }
             damageBoxTime--;
-            
+        
         } else if (damageBoxTime <= 0) {
             damageBox->pos.absolute = {-128, -128};
         }
+        
 
         // Draw
         BeginDrawing();
         ClearBackground(BLUE);
-
         BeginMode2D(camera);
         
         tilemap->Render();
@@ -311,7 +275,6 @@ void App::Run(bool debug) { // Main loop
 
         damageBox->Draw();
         //DrawRectangleLines(damageBox->pos.absolute.x - damageBox->size.x/2, damageBox->pos.absolute.y - damageBox->size.y/2, damageBox->size.x, damageBox->size.y, WHITE);
-
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.y/4, 4, GRAY);
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.x/4, 4, RED);
 
@@ -320,7 +283,8 @@ void App::Run(bool debug) { // Main loop
         }
 
         if (debug) {
-            DrawText(TextFormat("HEALTH: %i", player1->health.x), -100, 64, 1, BLACK);
+            DrawText(TextFormat("curr_texture: %i", damageBox->texture), -100, 64, 1, BLACK);
+            DrawText(TextFormat("dmg_time: %i", damageBoxTime), -100, 32, 1, BLACK);
         }
 
         EndDrawing();
