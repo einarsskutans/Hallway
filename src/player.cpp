@@ -46,16 +46,20 @@ void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
     structmap->Move(newpos);
 }
 
-void Player::Attack(int frame) {
+void Player::Attack(int init, int frame, Structmap* structmap) {
+    if (init) {
+        int damageBoxTime = 15;
+        init = 0;
+    }
+
     Tile* damageBox = new Tile(BLACK);
-    damageBox->sides = 4;
-    damageBox->framesPerSide = 3;
-    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
+        damageBox->sides = 4;
+        damageBox->framesPerSide = 3;
+        damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
 
-    damageBox->texture = damageBox->textureFrames[0];
-    int damageBoxTime = 0;
+        damageBox->texture = damageBox->textureFrames[0];
+        int damageBoxTime = 0;
 
-    damageBoxTime = 15;
     if (orientation.top) {
         damageBox->pos.absolute = {pos.absolute.x, pos.absolute.y - 8};
         damageBox->size = {16, 8};
@@ -71,6 +75,67 @@ void Player::Attack(int frame) {
     else if (orientation.right) {
         damageBox->pos.absolute = {pos.absolute.x + 8, pos.absolute.y};
         damageBox->size = {8, 16};
+    }
+
+    if (damageBoxTime > 0) {
+        for (int i = 0; i < structmap->enemiesStored.size(); i++) {
+            if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
+                structmap->enemiesStored[i]->iframes = 120;
+                structmap->enemiesStored[i]->health.x -= 10;
+                if (structmap->enemiesStored[i]->health.x <= 0) {
+                    structmap->enemiesStored.erase(structmap->enemiesStored.begin() + i);
+                }
+            }
+        }
+        
+        if (damageBoxTime <= 5) {
+            if (orientation.top) {
+                damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*0];
+            }
+            else if (orientation.right) {
+                damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*3];
+            }
+            else if (orientation.left) {
+                damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*2];
+            }
+            else if (orientation.bottom) {
+                damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*1];
+            }
+        }
+        else if (damageBoxTime <= 10) {
+            if (orientation.top) {
+                damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*0];
+            }
+            else if (orientation.right) {
+                damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*3];
+            }
+            else if (orientation.left) {
+                damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*2];
+            }
+            else if (orientation.bottom) {
+                damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*1];
+            }
+        }
+        else if (damageBoxTime <= 15) {
+            if (orientation.top) {
+                damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*0];
+            }
+            else if (orientation.right) {
+                damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*3];
+            }
+            else if (orientation.left) {
+                damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*2];
+            }
+            else if (orientation.bottom) {
+                damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*1];
+            }
+        }
+        damageBoxTime--;
+    
+    } 
+    else if (damageBoxTime <= 0) {
+        damageBox->pos.absolute = {-128, -128};
+        init = 1;
     }
 
     delete damageBox;

@@ -9,6 +9,7 @@
 #include "tile.h"
 #include "structmap.h"
 #include "structure.h"
+#include "physics.h"
 
 class Player : public Sprite {
     public:
@@ -16,7 +17,7 @@ class Player : public Sprite {
         void LoadAsset();
         void Draw();
         void Move(Tilemap* tilemap, Structmap* structmap, Point newpos);
-        void Attack(int frame);
+        void Attack(int init, int frame, Structmap* structmap);
 
         Velocity orientation; // Velocity class just to figure out sides
     private:

@@ -61,7 +61,7 @@ void App::Run(bool debug) { // Main loop
     damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
 
     damageBox->texture = damageBox->textureFrames[0];
-    int damageBoxTime = 0;
+    int frame = 0;
 
     int decider;
     srand(time(0));
@@ -69,6 +69,9 @@ void App::Run(bool debug) { // Main loop
     Menu();
 
     while (WindowShouldClose() == false) {
+        frame++;
+        if (frame > 60) frame = 0;
+
         // Events; Player moves by moving the Tilemap itself
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
         decider = GetRandomValue(1, 1024);
