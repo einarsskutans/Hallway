@@ -155,9 +155,9 @@ void App::Run(bool debug) { // Main loop
         }
 
         if (decider == 1 && structmap->enemiesStored.size() < 3) {
-            Enemy* newenemy = new Enemy({16, 16}, {32, 32}, defaultvel);
+            Enemy* newenemy = new Enemy({32, 32}, {32, 32}, defaultvel);
             newenemy->health = {100, 100};
-            newenemy->pos.absolute = {32, 32};
+            newenemy->pos.absolute = {GetRandomValue(0, structmap->mapSize.x), GetRandomValue(0, structmap->mapSize.y)};
             newenemy->LoadAsset();
             structmap->enemiesStored.push_back(newenemy);
         }

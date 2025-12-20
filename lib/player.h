@@ -16,6 +16,8 @@ class Player : public Sprite {
         void LoadAsset();
         void Draw();
         void Move(Tilemap* tilemap, Structmap* structmap, Point newpos);
+        void Attack(int frame);
+
         Velocity orientation; // Velocity class just to figure out sides
     private:
         std::string name;

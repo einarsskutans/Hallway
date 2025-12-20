@@ -45,3 +45,33 @@ void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
     tilemap->Move(newpos);
     structmap->Move(newpos);
 }
+
+void Player::Attack(int frame) {
+    Tile* damageBox = new Tile(BLACK);
+    damageBox->sides = 4;
+    damageBox->framesPerSide = 3;
+    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
+
+    damageBox->texture = damageBox->textureFrames[0];
+    int damageBoxTime = 0;
+
+    damageBoxTime = 15;
+    if (orientation.top) {
+        damageBox->pos.absolute = {pos.absolute.x, pos.absolute.y - 8};
+        damageBox->size = {16, 8};
+    }
+    else if (orientation.bottom) {
+        damageBox->pos.absolute = {pos.absolute.x, pos.absolute.y + 8};
+        damageBox->size = {16, 8};
+    }
+    else if (orientation.left) {
+        damageBox->pos.absolute = {pos.absolute.x - 8, pos.absolute.y};
+        damageBox->size = {8, 16};
+    }
+    else if (orientation.right) {
+        damageBox->pos.absolute = {pos.absolute.x + 8, pos.absolute.y};
+        damageBox->size = {8, 16};
+    }
+
+    delete damageBox;
+}
