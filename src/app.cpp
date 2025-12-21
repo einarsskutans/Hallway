@@ -54,15 +54,7 @@ void App::Run(bool debug) { // Main loop
     structmap->LoadAssets(8);
     structmap->Load();
 
-    // Damage box and animation (MOVE OUTSIDE THIS CLASS PLEASE)
-    Tile* damageBox = new Tile(BLACK);
-    damageBox->sides = 4;
-    damageBox->framesPerSide = 3;
-    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
-
-    damageBox->texture = damageBox->textureFrames[0];
     int frame = 0;
-
     int decider;
     srand(time(0));
 
@@ -122,25 +114,8 @@ void App::Run(bool debug) { // Main loop
             }
         }
 
-        if (IsKeyDown(KEY_SPACE) && damageBoxTime <= 0) {
-            damageBoxTime = 15;
-            if (player1->orientation.top) {
-                damageBox->pos.absolute = {player1->pos.absolute.x, player1->pos.absolute.y - 8};
-                damageBox->size = {16, 8};
-            }
-            else if (player1->orientation.bottom) {
-                damageBox->pos.absolute = {player1->pos.absolute.x, player1->pos.absolute.y + 8};
-                damageBox->size = {16, 8};
-            }
-            else if (player1->orientation.left) {
-                damageBox->pos.absolute = {player1->pos.absolute.x - 8, player1->pos.absolute.y};
-                damageBox->size = {8, 16};
-            }
-            else if (player1->orientation.right) {
-                damageBox->pos.absolute = {player1->pos.absolute.x + 8, player1->pos.absolute.y};
-                damageBox->size = {8, 16};
-            }
-
+        if (IsKeyDown(KEY_SPACE) && player1->damageBoxTime <= 0) {
+            player1->Attack(15, structmap);
         }
 
         player1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
@@ -206,6 +181,7 @@ void App::Run(bool debug) { // Main loop
             enemy->iframes--;
         }
 
+        /*
         if (damageBoxTime > 0) {
             for (int i = 0; i < structmap->enemiesStored.size(); i++) {
                 if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
@@ -264,7 +240,8 @@ void App::Run(bool debug) { // Main loop
         } else if (damageBoxTime <= 0) {
             damageBox->pos.absolute = {-128, -128};
         }
-        
+        */
+        player1->UpdateAnimation(structmap);
 
         // Draw
         BeginDrawing();
@@ -275,8 +252,7 @@ void App::Run(bool debug) { // Main loop
         structmap->Render();
         
         player1->Draw();
-
-        damageBox->Draw();
+        player1->damageBox->Draw();
         //DrawRectangleLines(damageBox->pos.absolute.x - damageBox->size.x/2, damageBox->pos.absolute.y - damageBox->size.y/2, damageBox->size.x, damageBox->size.y, WHITE);
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.y/4, 4, GRAY);
         DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.x/4, 4, RED);
@@ -286,8 +262,7 @@ void App::Run(bool debug) { // Main loop
         }
 
         if (debug) {
-            DrawText(TextFormat("curr_texture: %i", damageBox->texture), -100, 64, 1, BLACK);
-            DrawText(TextFormat("dmg_time: %i", damageBoxTime), -100, 32, 1, BLACK);
+            
         }
 
         EndDrawing();

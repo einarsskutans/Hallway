@@ -4,6 +4,11 @@ Player::Player(Point newpos, Point newsize, Velocity newvel) {
     SetPos(newpos);
     SetSize(newsize);
     SetVel(newvel);
+    hit_init = 1;
+
+    damageBox->sides = 4;
+    damageBox->framesPerSide = 3;
+    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
 }
 
 void Player::LoadAsset() {
@@ -46,20 +51,8 @@ void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
     structmap->Move(newpos);
 }
 
-void Player::Attack(int init, int frame, Structmap* structmap) {
-    if (init) {
-        int damageBoxTime = 15;
-        init = 0;
-    }
-
-    Tile* damageBox = new Tile(BLACK);
-        damageBox->sides = 4;
-        damageBox->framesPerSide = 3;
-        damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
-
-        damageBox->texture = damageBox->textureFrames[0];
-        int damageBoxTime = 0;
-
+void Player::Attack(int time, Structmap* structmap) {
+    damageBoxTime = 15;
     if (orientation.top) {
         damageBox->pos.absolute = {pos.absolute.x, pos.absolute.y - 8};
         damageBox->size = {16, 8};
@@ -77,6 +70,9 @@ void Player::Attack(int init, int frame, Structmap* structmap) {
         damageBox->size = {8, 16};
     }
 
+}
+
+void Player::UpdateAnimation(Structmap* structmap) {
     if (damageBoxTime > 0) {
         for (int i = 0; i < structmap->enemiesStored.size(); i++) {
             if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
@@ -135,8 +131,6 @@ void Player::Attack(int init, int frame, Structmap* structmap) {
     } 
     else if (damageBoxTime <= 0) {
         damageBox->pos.absolute = {-128, -128};
-        init = 1;
+        hit_init = 1;
     }
-
-    delete damageBox;
 }

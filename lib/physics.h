@@ -10,6 +10,8 @@
 #include "structure.h"
 #include "enemy.h"
 
+class Player;
+
 class Physics {
     public:
         static void CollideTile(Tilemap* tilemap, Structmap* structmap, Player* entity, Tile* tile); // Collision with a single tile
