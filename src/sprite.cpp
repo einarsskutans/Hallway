@@ -19,7 +19,7 @@ void Sprite::SetDrawable(bool newdrawable) {
 void Sprite::SetMovable(bool newmovable) {
     movable = newmovable;
 }
-void Sprite::LoadAnimationFrames(char* pathToFolder, int n) {
+void Sprite::LoadAnimationFrames(const char* pathToFolder, int n) {
     for (int i = 0; i < 12; i++) {
         Image image = LoadImage(TextFormat("%s/frame000%i.png", pathToFolder, i));
         Texture2D texture = LoadTextureFromImage(image);

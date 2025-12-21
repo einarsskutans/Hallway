@@ -8,7 +8,8 @@ Player::Player(Point newpos, Point newsize, Velocity newvel) {
 
     damageBox->sides = 4;
     damageBox->framesPerSide = 3;
-    damageBox->LoadAnimationFrames("textures/swipe", damageBox->framesPerSide);
+    const char* path = "textures/swipe";
+    damageBox->LoadAnimationFrames(path, damageBox->framesPerSide);
 }
 
 void Player::LoadAsset() {
@@ -74,7 +75,7 @@ void Player::Attack(int time, Structmap* structmap) {
 
 void Player::UpdateAnimation(Structmap* structmap) {
     if (damageBoxTime > 0) {
-        for (int i = 0; i < structmap->enemiesStored.size(); i++) {
+        for (unsigned int i = 0; i < structmap->enemiesStored.size(); i++) {
             if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
                 structmap->enemiesStored[i]->iframes = 120;
                 structmap->enemiesStored[i]->health.x -= 10;

@@ -99,7 +99,7 @@ void Structmap::GenerateStructmap(const std::string& filename) {
 
 void Structmap::LoadAssets(int n) {
     assetsStored = readAssets("src/assets.csv");
-    for (int i = 0; i < assetsStored.size(); i++) {
+    for (unsigned int i = 0; i < assetsStored.size(); i++) {
         Image image = LoadImage(assetsStored[i]->path.c_str()); // Load image in CPU memory (RAM)
 
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
@@ -111,8 +111,8 @@ void Structmap::LoadAssets(int n) {
 }
 
 void Structmap::LoadStructures() {
-    for (int j = 0; j < textureMap.size(); j++) {
-        for (int i = 0; i < textureMap[j].size(); i++) {
+    for (unsigned int j = 0; j < textureMap.size(); j++) {
+        for (unsigned int i = 0; i < textureMap[j].size(); i++) {
             Structure* newstruct = new Structure();
             if (textureMap[j][i] != 0) {
                 for (Asset* asset : assetsStored) {

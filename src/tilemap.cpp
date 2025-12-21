@@ -126,7 +126,7 @@ void Tilemap::GenerateTileMap(const std::string& filename) {
 
 void Tilemap::LoadAssets(int n) {
     assetsStored = readAssets("src/assets.csv");
-    for (int i = 0; i < assetsStored.size(); i++) {
+    for (unsigned int i = 0; i < assetsStored.size(); i++) {
         Image image = LoadImage(assetsStored[i]->path.c_str()); // Load image in CPU memory (RAM)
 
         Texture2D texture = LoadTextureFromImage(image); // Image converted to texture, uploaded to GPU memory (VRAM)
@@ -139,8 +139,8 @@ void Tilemap::LoadAssets(int n) {
 
 void Tilemap::LoadTiles() {
     Color color = BLACK;
-    for (int j = 0; j < textureMap.size(); j++) {
-        for (int i = 0; i < textureMap[j].size(); i++) {
+    for (unsigned int j = 0; j < textureMap.size(); j++) {
+        for (unsigned int i = 0; i < textureMap[j].size(); i++) {
 
             Tile* newtile = new Tile(color);
             for (Asset* asset : assetsStored) {

@@ -26,7 +26,7 @@ class Sprite {
         void SetVel(Velocity newvel);
         void SetDrawable(bool newdrawable);
         void SetMovable(bool newmovable);
-        void LoadAnimationFrames(char* pathToFolder, int n);
+        void LoadAnimationFrames(const char* pathToFolder, int n);
         Pos GetPos();
         Point GetSize();
         Velocity GetVel();
