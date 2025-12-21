@@ -159,11 +159,13 @@ void App::Run(bool debug) { // Main loop
         player1->iframes--;
 
         // Physics
+        /*
         for (unsigned int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
                 Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
             }
         }
+        */
         for (unsigned int i = 0; i < structmap->structuresStored.size(); i++) {
             if (structmap->structuresStored[i]->solid) {
                 Physics::CollideStructure(tilemap, structmap, player1, structmap->structuresStored[i]);

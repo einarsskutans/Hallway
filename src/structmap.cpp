@@ -84,9 +84,6 @@ void Structmap::GenerateStructmap(const std::string& filename) {
             if (r <= CHANCE_HOUSE) {
                 file << "4,";
             }
-            else if (r <= CHANCE_BUSH) {
-                file << "5,";
-            }
             else {
                 file << "0,";
             }

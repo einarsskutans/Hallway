@@ -58,12 +58,12 @@ bool Physics::CollideEnemy(Player* entity, Enemy* enemy) {
     }
 }
 
-bool Physics::CollideEnemyDamage(Enemy* enemy, Tile* tile) {
+bool Physics::CollideSpriteCheck(Sprite* sprite, Tile* tile) {
     if (
-        enemy->pos.absolute.x + enemy->size.x/2 > tile->pos.absolute.x - tile->size.x/2 &&
-        enemy->pos.absolute.x - enemy->size.x/2 < tile->pos.absolute.x + tile->size.x/2 &&
-        enemy->pos.absolute.y + enemy->size.y/2 > tile->pos.absolute.y - tile->size.y/2 &&
-        enemy->pos.absolute.y - enemy->size.y/2 < tile->pos.absolute.y + tile->size.y/2
+        sprite->pos.absolute.x + sprite->size.x/2 > tile->pos.absolute.x - tile->size.x/2 &&
+        sprite->pos.absolute.x - sprite->size.x/2 < tile->pos.absolute.x + tile->size.x/2 &&
+        sprite->pos.absolute.y + sprite->size.y/2 > tile->pos.absolute.y - tile->size.y/2 &&
+        sprite->pos.absolute.y - sprite->size.y/2 < tile->pos.absolute.y + tile->size.y/2
     ) {
         return true;
     } else {

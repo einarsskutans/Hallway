@@ -78,45 +78,45 @@ void Tilemap::GenerateTileMap(const std::string& filename) {
         for (int col = 0; col < mapSize.x; col++) {
             // Out of bounds
             if (col < 31 || col > mapSize.x-31) {
-                file << GetRandomValue(6, 9) << ",";
+                file << GetRandomValue(10, 13) << ",";
             }
             else if (row < 31 || row > mapSize.y-31) {
-                file << GetRandomValue(6, 9) << ",";
+                file << GetRandomValue(10, 13) << ",";
             }
 
             // Out of bounds edges
             else if (col == 31 || col == mapSize.x-31) {
                 if (GetRandomValue(1, 4) < 4) {
-                    file << GetRandomValue(6, 9) << ",";   
+                    file << GetRandomValue(10, 13) << ",";   
                 } else {
-                    file << GetRandomValue(1, 3) << ",";
+                    file << GetRandomValue(6, 9) << ",";
                 }
             }
             else if (row == 31 || row == mapSize.y-31) {
                 if (GetRandomValue(1, 4) < 4) {
-                    file << GetRandomValue(6, 9) << ",";   
+                    file << GetRandomValue(10, 13) << ",";   
                 } else {
-                    file << GetRandomValue(1, 3) << ",";
+                    file << GetRandomValue(6, 9) << ",";
                 }
             }
             else if (col == 32 || col == mapSize.x-32) {
                 if (GetRandomValue(1, 4) < 2) {
-                    file << GetRandomValue(6, 9) << ",";   
+                    file << GetRandomValue(10, 13) << ",";   
                 } else {
-                    file << GetRandomValue(1, 3) << ",";
+                    file << GetRandomValue(6, 9) << ",";
                 }
             }
             else if (row == 32 || row == mapSize.y-32) {
                 if (GetRandomValue(1, 4) < 2) {
-                    file << GetRandomValue(6, 9) << ",";   
+                    file << GetRandomValue(10, 13) << ",";   
                 } else {
-                    file << GetRandomValue(1, 3) << ",";
+                    file << GetRandomValue(6, 9) << ",";
                 }
             }
 
             // Grass
             else {
-                file << GetRandomValue(1, 3) << ",";
+                file << GetRandomValue(6, 9) << ",";
             }
         }
         file << "\n";
