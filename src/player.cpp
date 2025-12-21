@@ -76,7 +76,7 @@ void Player::Attack(int time, Structmap* structmap) {
 void Player::UpdateAnimation(Structmap* structmap) {
     if (damageBoxTime > 0) {
         for (unsigned int i = 0; i < structmap->enemiesStored.size(); i++) {
-            if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
+            if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideSpriteCheck(structmap->enemiesStored[i], damageBox)) {
                 structmap->enemiesStored[i]->iframes = 120;
                 structmap->enemiesStored[i]->health.x -= 10;
                 if (structmap->enemiesStored[i]->health.x <= 0) {

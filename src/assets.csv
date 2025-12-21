@@ -7,7 +7,7 @@ textures/stone_default1.png,stone_default1,6,0
 textures/stone_default2.png,stone_default2,7,0
 textures/stone_default3.png,stone_default3,8,0
 textures/stone_default4.png,stone_default4,9,0
-textures/water1.png,water1,10,1
-textures/water2.png,water2,11,1
-textures/water3.png,water3,12,1
-textures/water4.png,water4,13,1
+textures/water1.png,water,10,0
+textures/water2.png,water,11,0
+textures/water3.png,water,12,0
+textures/water4.png,water,13,0

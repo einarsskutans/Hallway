@@ -138,14 +138,14 @@ void Tilemap::LoadAssets(int n) {
 }
 
 void Tilemap::LoadTiles() {
-    Color color = BLACK;
+    std::string tile_type = "none";
     for (unsigned int j = 0; j < textureMap.size(); j++) {
         for (unsigned int i = 0; i < textureMap[j].size(); i++) {
-
-            Tile* newtile = new Tile(color);
+            Tile* newtile = new Tile(tile_type);
             for (Asset* asset : assetsStored) {
                 if (asset->id == textureMap[j][i]) {
                     newtile->texture = asset->texture;
+                    newtile->tile_type = asset->name;
                     newtile->solid = asset->solid;
                 }
             }

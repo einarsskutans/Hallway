@@ -24,7 +24,7 @@ class Player : public Sprite {
         int hit_init;
         int damageBoxTime;
         Velocity orientation; // Velocity class just to figure out sides
-        Tile* damageBox = new Tile(BLACK);
+        Tile* damageBox = new Tile("none");
     private:
         std::string name;
         Texture2D textureDefault;

@@ -36,6 +36,7 @@ void App::Menu() {
 
 void App::Run(bool debug) { // Main loop
     int vel = 1; // SPEED
+    int player_speed = 1;
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player({0, 0}, {4, 8}, defaultvel);
     player1->health = {100, 100};
@@ -62,7 +63,7 @@ void App::Run(bool debug) { // Main loop
 
     while (WindowShouldClose() == false) {
         frame++;
-        if (frame > 60) frame = 0;
+        if (frame > 60) {frame = 0; player_speed = 1;}
 
         // Events; Player moves by moving the Tilemap itself
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
@@ -70,47 +71,47 @@ void App::Run(bool debug) { // Main loop
 
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
-            player1->vel = {0, 0, vel, 0};
+            player1->vel = {0, 0, player_speed, 0};
             player1->orientation = {0, 0, 1, 0};
 
             if (IsKeyDown(KEY_UP)) {
-                player1->vel = {-vel, 0, 1, 0};
+                player1->vel = {-player_speed, 0, 1, 0};
             }
             if (IsKeyDown(KEY_DOWN)) {
-                player1->vel = {0, 0, vel, vel};
+                player1->vel = {0, 0, player_speed, player_speed};
             }
         }
         else if (IsKeyDown(KEY_LEFT)) {
-            player1->vel = {0, -vel, 0, 0};
+            player1->vel = {0, -player_speed, 0, 0};
             player1->orientation = {0, 1, 0, 0};
 
             if (IsKeyDown(KEY_UP)) {
-                player1->vel = {-vel, -vel, 0, 0};
+                player1->vel = {-player_speed, -player_speed, 0, 0};
             }
             if (IsKeyDown(KEY_DOWN)) {
-                player1->vel = {0, -vel, 0, vel};
+                player1->vel = {0, -player_speed, 0, player_speed};
             }
         }
         if (IsKeyDown(KEY_UP)) {
-            player1->vel = {-vel, 0, 0, 0};
+            player1->vel = {-player_speed, 0, 0, 0};
             player1->orientation = {1, 0, 0, 0};
 
             if (IsKeyDown(KEY_RIGHT)) {
-                player1->vel = {-vel, 0, vel, 0};
+                player1->vel = {-player_speed, 0, player_speed, 0};
             }
             if (IsKeyDown(KEY_LEFT)) {
-                player1->vel = {-vel, -vel, 0, 0};
+                player1->vel = {-player_speed, -player_speed, 0, 0};
             }
         }
         else if (IsKeyDown(KEY_DOWN)) {
-            player1->vel = {0, 0, 0, vel};
+            player1->vel = {0, 0, 0, player_speed};
             player1->orientation = {0, 0, 0, 1};
 
             if (IsKeyDown(KEY_RIGHT)) {
-                player1->vel = {0, 0, vel, vel};
+                player1->vel = {0, 0, player_speed, player_speed};
             }
             if (IsKeyDown(KEY_LEFT)) {
-                player1->vel = {0, -vel, 0, vel};
+                player1->vel = {0, -player_speed, 0, player_speed};
             }
         }
 
@@ -159,13 +160,28 @@ void App::Run(bool debug) { // Main loop
         player1->iframes--;
 
         // Physics
-        /*
+        
+        //if (frame > 30) vel = 1; // To prevent full stop in the water
+
         for (unsigned int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
                 Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
             }
         }
-        */
+
+        for (unsigned int i = 0; i < tilemap->tilesStored.size(); i++) {
+            if (tilemap->tilesStored[i]->tile_type == "water") {
+                if (player1->iframes <= 0 && Physics::CollideSpriteCheck(player1, tilemap->tilesStored[i])) {
+                    player1->iframes = 120;
+                    player1->health.x -= 10;
+                    if (frame%60 == 0) player_speed = 0;
+                }
+                else if (Physics::CollideSpriteCheck(player1, tilemap->tilesStored[i])) {
+                    if (frame%60 == 0) player_speed = 0;
+                }
+            }
+        }
+        
         for (unsigned int i = 0; i < structmap->structuresStored.size(); i++) {
             if (structmap->structuresStored[i]->solid) {
                 Physics::CollideStructure(tilemap, structmap, player1, structmap->structuresStored[i]);
@@ -175,12 +191,13 @@ void App::Run(bool debug) { // Main loop
             if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy)) {
                 player1->iframes = 120;
                 player1->health.x -= 10;
-                if (player1->health.x <= 0) {
-                    structmap->enemiesStored = {};
-                    Menu();
-                }
             }
             enemy->iframes--;
+        }
+
+        if (player1->health.x <= 0) {
+            structmap->enemiesStored = {};
+            Menu();
         }
 
         /*

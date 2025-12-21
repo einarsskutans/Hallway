@@ -1,7 +1,7 @@
 #include "lib/tile.h"
 
-Tile::Tile(Color newcolor) {
-    color = newcolor;
+Tile::Tile(std::string tile_type) {
+    this->tile_type = tile_type;
 }
 
 void Tile::Draw() {
