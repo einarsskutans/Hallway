@@ -174,10 +174,12 @@ void App::Run(bool debug) { // Main loop
                 if (player1->iframes <= 0 && Physics::CollideSpriteCheck(player1, tilemap->tilesStored[i])) {
                     player1->iframes = 120;
                     player1->health.x -= 10;
-                    if (frame%60 == 0) player_speed = 0;
+                    if (frame%2 == 0) player_speed = 0;
+                    else {player_speed = 1;}
                 }
                 else if (Physics::CollideSpriteCheck(player1, tilemap->tilesStored[i])) {
-                    if (frame%60 == 0) player_speed = 0;
+                    if (frame%2 == 0) player_speed = 0;
+                    else {player_speed = 1;}
                 }
             }
         }
