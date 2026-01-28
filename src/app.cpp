@@ -72,7 +72,7 @@ void App::Run(bool debug) { // Main loop
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
             player1->vel = {0, 0, player_speed, 0};
-            player1->orientation = {0, 0, 1, 0};
+            if (!player1->orientationLock) player1->orientation = {0, 0, 1, 0};
 
             if (IsKeyDown(KEY_UP)) {
                 player1->vel = {-player_speed, 0, 1, 0};
@@ -83,7 +83,7 @@ void App::Run(bool debug) { // Main loop
         }
         else if (IsKeyDown(KEY_LEFT)) {
             player1->vel = {0, -player_speed, 0, 0};
-            player1->orientation = {0, 1, 0, 0};
+            if (!player1->orientationLock) player1->orientation = {0, 1, 0, 0};
 
             if (IsKeyDown(KEY_UP)) {
                 player1->vel = {-player_speed, -player_speed, 0, 0};
@@ -94,7 +94,7 @@ void App::Run(bool debug) { // Main loop
         }
         if (IsKeyDown(KEY_UP)) {
             player1->vel = {-player_speed, 0, 0, 0};
-            player1->orientation = {1, 0, 0, 0};
+            if (!player1->orientationLock) player1->orientation = {1, 0, 0, 0};
 
             if (IsKeyDown(KEY_RIGHT)) {
                 player1->vel = {-player_speed, 0, player_speed, 0};
@@ -105,7 +105,7 @@ void App::Run(bool debug) { // Main loop
         }
         else if (IsKeyDown(KEY_DOWN)) {
             player1->vel = {0, 0, 0, player_speed};
-            player1->orientation = {0, 0, 0, 1};
+            if (!player1->orientationLock) player1->orientation = {0, 0, 0, 1};
 
             if (IsKeyDown(KEY_RIGHT)) {
                 player1->vel = {0, 0, player_speed, player_speed};

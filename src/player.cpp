@@ -54,6 +54,7 @@ void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
 
 void Player::Attack(int time, Structmap* structmap) {
     damageBoxTime = 15;
+    orientationLock = true;
     if (orientation.top) {
         damageBox->pos.absolute = {pos.absolute.x, pos.absolute.y - 8};
         damageBox->size = {16, 8};
@@ -132,6 +133,7 @@ void Player::UpdateAnimation(Structmap* structmap) {
     } 
     else if (damageBoxTime <= 0) {
         damageBox->pos.absolute = {-128, -128};
+        orientationLock = false;
         hit_init = 1;
     }
 }

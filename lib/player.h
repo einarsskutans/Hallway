@@ -23,6 +23,7 @@ class Player : public Sprite {
         void UpdateAnimation(Structmap* structmap);
         int hit_init;
         int damageBoxTime;
+        bool orientationLock = false;
         Velocity orientation; // Velocity class just to figure out sides
         Tile* damageBox = new Tile("none");
     private:
