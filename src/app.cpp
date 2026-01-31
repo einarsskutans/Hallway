@@ -201,67 +201,7 @@ void App::Run(bool debug) { // Main loop
             structmap->enemiesStored = {};
             Menu();
         }
-
-        /*
-        if (damageBoxTime > 0) {
-            for (int i = 0; i < structmap->enemiesStored.size(); i++) {
-                if (structmap->enemiesStored[i]->iframes <= 0 && Physics::CollideEnemyDamage(structmap->enemiesStored[i], damageBox)) {
-                    structmap->enemiesStored[i]->iframes = 120;
-                    structmap->enemiesStored[i]->health.x -= 10;
-                    if (structmap->enemiesStored[i]->health.x <= 0) {
-                        structmap->enemiesStored.erase(structmap->enemiesStored.begin() + i);
-                    }
-                }
-            }
-            
-            if (damageBoxTime <= 5) {
-                if (player1->orientation.top) {
-                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*0];
-                }
-                else if (player1->orientation.right) {
-                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*3];
-                }
-                else if (player1->orientation.left) {
-                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*2];
-                }
-                else if (player1->orientation.bottom) {
-                    damageBox->texture = damageBox->textureFrames[2 + damageBox->framesPerSide*1];
-                }
-            }
-            else if (damageBoxTime <= 10) {
-                if (player1->orientation.top) {
-                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*0];
-                }
-                else if (player1->orientation.right) {
-                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*3];
-                }
-                else if (player1->orientation.left) {
-                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*2];
-                }
-                else if (player1->orientation.bottom) {
-                    damageBox->texture = damageBox->textureFrames[1 + damageBox->framesPerSide*1];
-                }
-            }
-            else if (damageBoxTime <= 15) {
-                if (player1->orientation.top) {
-                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*0];
-                }
-                else if (player1->orientation.right) {
-                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*3];
-                }
-                else if (player1->orientation.left) {
-                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*2];
-                }
-                else if (player1->orientation.bottom) {
-                    damageBox->texture = damageBox->textureFrames[0 + damageBox->framesPerSide*1];
-                }
-            }
-            damageBoxTime--;
         
-        } else if (damageBoxTime <= 0) {
-            damageBox->pos.absolute = {-128, -128};
-        }
-        */
         player1->UpdateAnimation(structmap);
 
         // Draw
@@ -274,9 +214,6 @@ void App::Run(bool debug) { // Main loop
         
         player1->Draw();
         player1->damageBox->Draw();
-        //DrawRectangleLines(damageBox->pos.absolute.x - damageBox->size.x/2, damageBox->pos.absolute.y - damageBox->size.y/2, damageBox->size.x, damageBox->size.y, WHITE);
-        DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.y/4, 4, GRAY);
-        DrawRectangle(-SCREENSIZE.x/8 + 2, -SCREENSIZE.y/8 + 2, player1->health.x/4, 4, RED);
 
         for (Enemy* enemy : structmap->enemiesStored) {
             enemy->Draw();
