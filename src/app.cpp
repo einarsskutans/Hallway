@@ -69,6 +69,7 @@ void App::Run(bool debug) { // Main loop
         camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
         decider = GetRandomValue(1, 1024);
 
+        // Player movement & keydowns
         player1->vel = {0, 0, 0, 0};
         if (IsKeyDown(KEY_RIGHT)) {
             player1->vel = {0, 0, player_speed, 0};
@@ -160,9 +161,6 @@ void App::Run(bool debug) { // Main loop
         player1->iframes--;
 
         // Physics
-        
-        //if (frame > 30) vel = 1; // To prevent full stop in the water
-
         for (unsigned int i = 0; i < tilemap->tilesStored.size(); i++) {
             if (tilemap->tilesStored[i]->solid) {
                 Physics::CollideTile(tilemap, structmap, player1, tilemap->tilesStored[i]);
@@ -201,7 +199,7 @@ void App::Run(bool debug) { // Main loop
             structmap->enemiesStored = {};
             Menu();
         }
-        
+
         player1->UpdateAnimation(structmap);
 
         // Draw
