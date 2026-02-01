@@ -1,9 +1,9 @@
 #ifndef HUD_H
 #define HUD_H
 
-#include "player.h"
+#include "app.h"
 
-class Hud {
+class Hud : public Sprite{
     public:
         Hud(Sprite* entity);
         void Load();

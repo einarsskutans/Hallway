@@ -216,7 +216,7 @@ void App::Run(bool debug) { // Main loop
         player1->Draw();
         player1->damageBox->Draw();
 
-        hud->DrawHealth();
+        hud->Draw();
 
         for (Enemy* enemy : structmap->enemiesStored) {
             enemy->Draw();

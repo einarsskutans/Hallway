@@ -11,8 +11,8 @@ void Hud::Load() {
 }
 
 void Hud::DrawHealth() {
-    for (int i = 0; i < target->health.x; i++) {
-        DrawTexture(textureHeart, -SCREENSIZE.x/2 + 8*i, -SCREENSIZE.y/2 + 8, WHITE);
+    for (int i = 1; i < target->health.x+1; i++) {
+        DrawTexture(textureHeart, pos.absolute.x - SCREENSIZE.x/SCALE/2 + 10*i, pos.absolute.y - SCREENSIZE.y/SCALE/2 + 4, WHITE);
     }
 }
 void Hud::DrawArmor() {
@@ -20,4 +20,6 @@ void Hud::DrawArmor() {
 void Hud::DrawInventory() {
 }
 void Hud::Draw() {
+    pos = target->pos;
+    DrawHealth();
 }
