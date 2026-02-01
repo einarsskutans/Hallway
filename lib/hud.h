@@ -12,7 +12,8 @@ class Hud {
         void DrawInventory();
         void Draw();
     private:
-        int health;
+        Sprite* target;
+        Texture2D textureHeart;
 };
 
 #endif

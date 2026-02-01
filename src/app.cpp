@@ -39,10 +39,11 @@ void App::Run(bool debug) { // Main loop
     int player_speed = 1;
     Velocity defaultvel = {-vel, -vel, vel, vel};
     Player* player1 = new Player({0, 0}, {4, 8}, defaultvel);
-    player1->health = {100, 100};
+    player1->health = {8, 8};
     player1->LoadAsset();
     Camera2D camera ({0});
-    camera.target = (Vector2) {player1->pos.absolute.x + 1.0f, player1->pos.absolute.y + 1.0f};
+    camera.target = (Vector2) {player1->pos.absolute.x, player1->pos.absolute.y};
+    camera.offset = (Vector2) {SCREENSIZE.x/2.0f, SCREENSIZE.y/2.0f};
     camera.zoom = 4.0f;
 
     Tilemap* tilemap = new Tilemap();
@@ -55,6 +56,9 @@ void App::Run(bool debug) { // Main loop
     structmap->LoadAssets(8);
     structmap->Load();
 
+    Hud* hud = new Hud(player1);
+    hud->Load();
+
     int frame = 0;
     int decider;
     srand(time(0));
@@ -66,7 +70,7 @@ void App::Run(bool debug) { // Main loop
         if (frame > 60) {frame = 0; player_speed = 1;}
 
         // Events; Player moves by moving the Tilemap itself
-        camera.target = (Vector2) {player1->pos.absolute.x - static_cast<float>(SCREENSIZE.x/8), player1->pos.absolute.y - static_cast<float>(SCREENSIZE.y/8)};
+        camera.target = (Vector2) {player1->pos.absolute.x, player1->pos.absolute.y};
         decider = GetRandomValue(1, 1024);
 
         // Player movement & keydowns
@@ -120,10 +124,10 @@ void App::Run(bool debug) { // Main loop
             player1->Attack(15, structmap);
         }
 
-        player1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
         player1->Move(tilemap, structmap, {-player1->GetVel().right, 0});
-        player1->Move(tilemap, structmap, {0, -player1->GetVel().top});
+        player1->Move(tilemap, structmap, {-player1->GetVel().left, 0});
         player1->Move(tilemap, structmap, {0, -player1->GetVel().bottom});
+        player1->Move(tilemap, structmap, {0, -player1->GetVel().top});
 
         // Enemy movement
         for (Enemy* enemy : structmap->enemiesStored) {
@@ -171,7 +175,7 @@ void App::Run(bool debug) { // Main loop
             if (tilemap->tilesStored[i]->tile_type == "water") {
                 if (player1->iframes <= 0 && Physics::CollideSpriteCheck(player1, tilemap->tilesStored[i])) {
                     player1->iframes = 120;
-                    player1->health.x -= 10;
+                    player1->health.x -= 1;
                     if (frame%2 == 0) player_speed = 0;
                     else {player_speed = 1;}
                 }
@@ -190,7 +194,7 @@ void App::Run(bool debug) { // Main loop
         for (Enemy* enemy : structmap->enemiesStored) {
             if (player1->iframes <= 0 && Physics::CollideEnemy(player1, enemy)) {
                 player1->iframes = 120;
-                player1->health.x -= 10;
+                player1->health.x -= 1;
             }
             enemy->iframes--;
         }
@@ -212,6 +216,8 @@ void App::Run(bool debug) { // Main loop
         
         player1->Draw();
         player1->damageBox->Draw();
+
+        hud->DrawHealth();
 
         for (Enemy* enemy : structmap->enemiesStored) {
             enemy->Draw();

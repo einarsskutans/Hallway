@@ -47,9 +47,11 @@ void Player::Draw() {
 }
 
 void Player::Move(Tilemap* tilemap, Structmap* structmap, Point newpos) {
-    pos.relative = {-newpos.x, -newpos.y};
-    tilemap->Move(newpos);
-    structmap->Move(newpos);
+    pos.absolute.x += newpos.x;
+    pos.absolute.y += newpos.y;
+
+    //tilemap->Move(newpos);
+    //structmap->Move(newpos);
 }
 
 void Player::Attack(int time, Structmap* structmap) {

@@ -16,6 +16,7 @@
 #include "structure.h"
 #include "structmap.h"
 #include "enemy.h"
+#include "hud.h"
 
 const Point SCREENSIZE = {1440, 720};
 
