@@ -7,9 +7,8 @@ Point operator-(const Point&a) {
     return Point{-a.x, -a.y};
 }
 
-void App::Init(Point newScreensize, int fps, bool debug) {
-    screensize = newScreensize;
-    InitWindow(screensize.x, screensize.y, "Hallway");
+void App::Init(int fps, bool debug) {
+    InitWindow(SCREENSIZE.x, SCREENSIZE.y, "Hallway");
     SetTargetFPS(fps);
 }
 
@@ -44,7 +43,7 @@ void App::Run(bool debug) { // Main loop
     Camera2D camera ({0});
     camera.target = (Vector2) {player1->pos.absolute.x, player1->pos.absolute.y};
     camera.offset = (Vector2) {SCREENSIZE.x/2.0f, SCREENSIZE.y/2.0f};
-    camera.zoom = 4.0f;
+    camera.zoom = SCALE;
 
     Tilemap* tilemap = new Tilemap();
     tilemap->pos.absolute = {-(tilemap->tilemapSize.x/2), -(tilemap->tilemapSize.y/2)}; // Player spawn (center)

@@ -19,14 +19,14 @@
 #include "hud.h"
 
 const Point SCREENSIZE = {1440, 720};
+const float SCALE = 4;
 
 class App {
     public:
-        void Init(Point newScreensize, int fps, bool debug);
+        void Init(int fps, bool debug);
         void Menu();
         void Run(bool debug);
     private:
-        Point screensize;
         bool mainloop = false;
 };
 
